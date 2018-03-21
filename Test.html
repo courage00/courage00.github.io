@@ -14,7 +14,7 @@ $(function () {
 $("#Submit").click(function () {
 let sheetID = "1lPo4uMQk0ZcqBuVVIiHgzUL-lce7wf7bIMT-4qMyB7E"; // 試算表代號
 let gid = $("select[name='block']").val(); // 工作表代號
-let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CR%2CS+Where"; // SQL 語法
+let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CR%2CS+where"; // SQL 語法
 let rent = $("#rent").val();
 let codename = $("#codename").val();
 let address = $("#address").val();
@@ -31,7 +31,7 @@ else{
    Dataurl += "+1%3D1+and+"; 
 }
 if(rent != ""){
-   Dataurl += "+J%3C%3D"+rent+"+Order+By+%22J%22+"; 
+   Dataurl += "+J%3C%3D"+rent+"+order+by+J+"; 
 }
 else{
    Dataurl += "+1%3D1+"; 

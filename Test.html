@@ -44,6 +44,23 @@ else{
         
 		
 $("#show").prop("src",Dataurl);
+ setTimeout(function () {
+  $('#show').load(function () {
+    // jquery 获取方法
+    // $(this).contents().find('.a')
+
+    // DOM 转 jquery对象
+    //  $(window.frames['iframe'].document).find('.a')
+    var doc = $(this).contents();
+    var a = doc.find('$table tr td:nth-child(15)');
+    a.click(function () {
+      alert("選到了");
+      // var id = $(this).data("id");
+      // console.log(id);
+      // $("#input").val(id);
+    });
+  });
+    }, 5000);
 });
 
 

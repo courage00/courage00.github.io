@@ -31,7 +31,7 @@ else{
    Dataurl += "+1%3D1+and+"; 
 }
 if(rent != ""){
-   Dataurl += "+J%3C%3D"+rent; 
+   Dataurl += "+J%3C%3D"+rent+"+Order+By+%22J%22+"; 
 }
 else{
    Dataurl += "+1%3D1+"; 
@@ -51,22 +51,6 @@ $("#show").prop("src",Dataurl);
 });
 		
 </script>
-  <style type="text/css"> 
-.iframe-rwd {
-    position: relative;
-    padding-bottom: 65.25%;
-    padding-top: 30px;
-    height: 0;
-    overflow: hidden;
-}
-.iframe-rwd iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-  </style> 
 </head>
 <body>
   
@@ -93,7 +77,7 @@ $("#show").prop("src",Dataurl);
       <h3 class="post-title">
         地區:
       </h3>
-      <select name="block">
+      <select  style="width:25%; font-size:20px;" name="block">
         <option value="80275508">信義區</option>
         <option value="370418206">大安區</option>
         <option value="1658421360">中山區</option>

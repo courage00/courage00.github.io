@@ -1,59 +1,200 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy|Bree+Serif|Candal|PT+Sans">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/flexslider.css">
+  <meta charset="utf-8">
+  <script type="Text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/flexslider.css">
 
-<script>
-$(function () {
-$("#Submit").click(function () {
-let sheetID = "1lPo4uMQk0ZcqBuVVIiHgzUL-lce7wf7bIMT-4qMyB7E"; // 試算表代號
-let gid = $("select[name='block']").val(); // 工作表代號
-let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CR%2CS+where"; // SQL 語法
-let rent = $("#rent").val();
-let codename = $("#codename").val();
-let address = $("#address").val();
+  <script>
+    $(function () {
+      // (function (window, $) {
+      $("#Submit").click(function () {
+        let sheetID = "1lPo4uMQk0ZcqBuVVIiHgzUL-lce7wf7bIMT-4qMyB7E"; // 試算表代號
+        let gid = $("select[name='block']").val(); // 工作表代號
+        let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CR%2CS+where"; // SQL 語法
+        let rent = $("#rent").val();
+        let codename = $("#codename").val();
+        let address = jQuery("#address").val();
+        let callback = "callback"; // 回呼函數名稱
 
-let callback = "callback"; // 回呼函數名稱
-let Dataurl="https://spreadsheets.google.com/tq?tqx=out:" + "html" + "&tq=" + sql ;
-if(codename != ""){
-   Dataurl += "+B+Like+%27%25"+codename+"%25%27+and+"; 
-}
-if(address != ""){
-   Dataurl += "+H+Like+%27%25"+escape(address)+"%25%27+and+"; 
-}
-else{
-   Dataurl += "+1%3D1+and+"; 
-}
-if(rent != ""){
-   Dataurl += "+J%3C%3D"+rent+"+order+by+J+"; 
-}
-else{
-   Dataurl += "+1%3D1+"; 
-}
-// <!-- if(rent == ""&& codename == "" && address ==""){ -->
-//    <!-- Dataurl += "+1%3D1"; -->
-// <!-- } -->
+        let Dataurl = "https://spreadsheets.google.com/tq?tqx=responseHandler:" + callback + "&tq=" + sql;
+        if (codename != "") {
+          Dataurl += "+B+Like+%27%25" + codename + "%25%27+and+";
+        }
+        if (address != "") {
+          Dataurl += "+H+Like+%27%25" + escape(address) + "%25%27+and+";
+        }
+        else {
+          Dataurl += "+1%3D1+and+";
+        }
+        if (rent != "") {
+          Dataurl += "+J%3C%3D" + rent + "+order+by+J+";
+        }
+        else {
+          Dataurl += "+1%3D1+";
+        }
 
-   Dataurl += "&key=" + sheetID + "&gid=" + gid;
-   $("#show").prop("src", Dataurl);    
-});
+        Dataurl += "&key=" + sheetID + "&gid=" + gid;
+        // $("#show").prop("src", Dataurl);
+        // $("#show").val(Dataurl);
+        // $("#demo").text(Dataurl);
 
+        $.getScript(Dataurl);
+        window[callback] = function (json) {
 
+          let rowArray = json.table.rows,
+            rowLength = rowArray.length,
+            html="",
+            // html = "<tr><th>物件狀態</th><th>編號</th><th>收件日期</th><th>對話要點</th><th>姓名</th><th>電話</th><th>地址</th><th>坪數</th><th>租金</th><th>電</th><th>含</th><th>押金/月</th><th>格局</th><th>型態</th><th>原網址</th><th>樂屋網</th></tr>",
+            i, j, dataGroup, dataLength;
+          for (i = 0; i < rowLength; i++) {
+            dataGroup = rowArray[i].c;
+            dataLength = dataGroup.length;
+            html += "<tr>";
+            for (j = 0; j < dataLength; j++) {
+              if (!dataGroup[j]) {
+                continue;
+              }
+              switch (j) {
+                case 0:
+                  html += "<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 1:
+                  html += "<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 2:
+                  html += "<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 3:
+                  html += "<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 4:
+                  html += "<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 5:
+                  html += "<td data-th=\"電話\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 6:
+                  html += "<td data-th=\"地址\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 7:
+                  html += "<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 8:
+                  html += "<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                  break;
+                case 9:
+                  html += "<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                  break;
+                case 10:
+                  html += "<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                  break;
+                case 11:
+                  html += "<td data-th=\"押金/月\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                  break;
+                case 12:
+                  html += "<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                  break;
+                case 13:
+                  html += "<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                  break;
+                case 14:
+                  html += "<td data-th=\"原網址\"><a herf=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                  break;
+                case 15:
+                  html += "<td data-th=\"樂屋網\"><a herf=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                  break;
+              }
+              html += (dataGroup[j].f || dataGroup[j].v || "") + " ";
+            }
+            html += "</tr>";
+          }
+          $("#show").html(html);
+        };
 
-});
-		
-</script>
+      });
+    });
+    // })(window, jQuery);
+  </script>
+  <style type="text/css">
+    .rwd-table {
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .rwd-table tr:nth-of-type(2n) {
+      background: #eee;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      margin: 0.5em 1em;
+    }
+
+    .rwd-table {
+      min-width: 100%;
+    }
+
+    .rwd-table th {
+      display: none;
+    }
+
+    .rwd-table td {
+      display: block;
+    }
+
+    .rwd-table td:before {
+      content: attr(data-th) " : ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      text-align: left;
+    }
+
+    .rwd-table th,
+    .rwd-table td:before {
+      color: #D20B2A;
+      font-weight: bold;
+    }
+
+    @media (min-width: 3000px) {
+      .rwd-table td:before {
+        display: none;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        display: table-cell;
+        padding: 0.25em 0.5em;
+      }
+      .rwd-table th:first-child,
+      .rwd-table td:first-child {
+        padding-left: 0;
+      }
+      .rwd-table th:last-child,
+      .rwd-table td:last-child {
+        padding-right: 0;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        padding: 1em !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div style="color: rgba(0, 0, 0, 0.87); background-color: rgba(0, 62, 177, 0.548); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 0px; position: relative; z-index: 1100; width: 100%; display: flex; padding-left: 24px; padding-right: 24px;">
     <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-size: 24px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 1 1 0%;">GORENT 物件查詢</h1>
   </div>
+
   <div class="row">
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-4 col-md-offset-2">
       <h3 class="post-title">
@@ -77,7 +218,7 @@ else{
       <h3 class="post-title">
         地區:
       </h3>
-      <select  style="width:25%; font-size:20px;" name="block">
+      <select style="width:25%; font-size:20px;" name="block">
         <option value="80275508">信義區</option>
         <option value="370418206">大安區</option>
         <option value="1658421360">中山區</option>
@@ -90,11 +231,20 @@ else{
       </select>
       <button id="Submit" class="btn btn-primary">get</button>
     </div>
-    <iframe class="col-xs-12 col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-0 " id="show" scrolling="yes" frameborder="0" align="center" width="100%" height="15000px"></iframe>
+    <!-- <iframe class="col-xs-12 col-sm-12 col-md-12 col-md-offset-0 " id="show" scrolling="no" frameborder="0" align="center" width="100%"
+      height="15000px"></iframe> -->
   </div>
-
-
-
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-6">
+        <table id="show" class="rwd-table">
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="iframe-rwd" > -->
+  <!-- <iframe id="show" scrolling="no" frameborder="0" align="center" width="100%" height="15000px"></iframe> -->
+  <!-- </div> -->
 </body>
 
 </html>

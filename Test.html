@@ -114,13 +114,13 @@
             }
             html += "</tr>";
           }
-		  $('#load').html("");;
+		  $('#load').html("");
           $("#show").html(html);
         };
 
       });
 	  function loading(){ 
-$('#load').html(' Loading...</br><img src="images/UyfU4KX.gif"/>'); 
+$('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>'); 
 } 
       $("#gotop").click(function () {
         jQuery("html,body").animate({
@@ -303,7 +303,7 @@ body{
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-sm-12">
-	  <div id="load" ></div>
+	  <div id="load"  style="display:block; margin:auto;text-align: center;" ></div>
         <table id="show" class="rwd-table">
         </table>
       </div>

@@ -9,7 +9,6 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/flexslider.css">
-
   <script>
     $(function () {
       // (function (window, $) {
@@ -17,10 +16,11 @@
         let sheetID = "1lPo4uMQk0ZcqBuVVIiHgzUL-lce7wf7bIMT-4qMyB7E"; // 試算表代號
         let gid = $("select[name='block']").val(); // 工作表代號
         let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CR%2CS+where"; // SQL 語法
-        let rent = $("#rent").val();
-        let codename = $("#codename").val();
-        let address = jQuery("#address").val();
+        let rent = $.trim($("#rent").val());
+        let codename = $.trim($("#codename").val());
+        let address = $.trim($("#address").val());
         let callback = "callback"; // 回呼函數名稱
+		loading();
 
         let Dataurl = "https://spreadsheets.google.com/tq?tqx=responseHandler:" + callback + "&tq=" + sql;
         if (codename != "") {
@@ -114,10 +114,14 @@
             }
             html += "</tr>";
           }
+		  $('#load').html("");;
           $("#show").html(html);
         };
 
       });
+	  function loading(){ 
+$('#load').html(' Loading...</br><img src="images/UyfU4KX.gif"/>'); 
+} 
       $("#gotop").click(function () {
         jQuery("html,body").animate({
           scrollTop: 0
@@ -132,8 +136,14 @@
       });
     });
     // })(window, jQuery);
+	//font-family: 'Noto Sans TC', sans-serif;
   </script>
+    
   <style type="text/css">
+body{
+   line-height:1.7;
+}
+
       table{
       font-size: 20px;
     }
@@ -293,6 +303,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-sm-12">
+	  <div id="load" ></div>
         <table id="show" class="rwd-table">
         </table>
       </div>

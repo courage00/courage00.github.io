@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script type="Text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/flexslider.css">
+  <script>
+    $(function () {
+      // (function (window, $) {
+      $("#Submit").click(function () {
+        $("#show").html("");
+        $('#anchor').html("");
+        let CheckBoxList = [];//存部分同意
+        for (let i = 1; i <= 3; i++) {  //存多選
+          if ($("#c" + i).prop('checked') == true) {
+            switch (i) {
+              case 1:
+                CheckBoxList.push(0);
+                break;
+              case 2:
+                CheckBoxList.push(552127149);
+                break;
+              case 3:
+                CheckBoxList.push(1852831626);
+                break;
+            }
+          }
+        }
+        // console.log(CheckBoxList.length);
+        if (CheckBoxList.length != 0) {
+          $("#ErrorBlock").html("")
+        }
+        else {
+          $("#ErrorBlock").append("未選擇")
+          return false;
+        }
+
+
+        let sheetID = "1aLAQ7l5-VrHRAR_2VSDMo7vtnhKpBcbNjaxxU0z092I"; // 試算表代號
+        let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CG%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
+        let rent = $.trim($("#rent").val());
+        let codename = $.trim($("#codename").val());
+        //let address = $.trim($("#address").val());
+        let callback = "callback"; // 回呼函數名稱
+        let blockcount = 1;//區塊命名
+
+        for (let x = 0; x < CheckBoxList.length; x++) {
+          loading();
+          let gid = CheckBoxList[x]; // 工作表代號
+          let anchorhr = new Array(9);
+          anchorhr[x] = gid;
+          let Dataurl = "https://spreadsheets.google.com/tq?tqx=responseHandler:" + callback + "&tq=" + sql;
+          if (codename != "") {
+            Dataurl += "+%28B+Like+%27%25" + escape(codename) + "%25%27+or+" + "+I+Like+%27%25" + escape(codename) + "%25%27%29+and+";
+          }
+          if (rent != "") {
+            Dataurl += "+J%3C%3D" + rent + "+order+by+J+";
+          }
+          else {
+            Dataurl += "+1%3D1+";
+          }
+          Dataurl += "&key=" + sheetID + "&gid=" + gid;
+          // console.log(Dataurl);
+          // console.log(gid);
+          $.getScript(Dataurl);
+          // $("#show").append("<hr id=\"anchor" + gid + "\">");
+          window[callback] = function (json) {
+            let rowArray = json.table.rows;
+            let rowLength = rowArray.length;
+            let html = "";
+            let i;
+            let j;
+            let dataGroup;
+            let dataLength;
+            for (i = 0; i < rowLength; i++) {
+              dataGroup = rowArray[i].c;
+              dataLength = dataGroup.length;
+              html += "<tr>";
+              for (j = 0; j < dataLength; j++) {
+                if (!dataGroup[j]) {
+                  continue;
+                }
+                switch (j) {
+                  case 0:
+                    html += "<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 1:
+                    html += "<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 2:
+                    html += "<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 3:
+                    html += "<td data-th=\"服務費\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 4:
+                    html += "<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 5:
+                    html += "<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 6:
+                    html += "<td data-th=\"電話\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 7:
+                    html += "<td data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 8:
+                    html += "<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>";
+                    break;
+                  case 9:
+                    html += "<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 10:
+                    html += "<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 11:
+                    html += "<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 12:
+                    html += "<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 13:
+                    html += "<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 14:
+                    html += "<td data-th=\"現況\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 15:
+                    html += "<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 16:
+                    html += "<td data-th=\"管理費\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 17:
+                    html += "<td data-th=\"開伙\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 18:
+                    html += "<td data-th=\"寵物\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 19:
+                    html += "<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 20:
+                    html += "<td data-th=\"原網址\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    break;
+                  case 21:
+                    html += "<td data-th=\"樂屋網\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    break;
+                }
+                html += (dataGroup[j].f || dataGroup[j].v || "") + " ";
+              }
+              html += "</tr>";
+            }
+            $("#show").append("<hr id=\"anchor_" + blockcount + "\">");
+            $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\" style=\"font-size:25px; \" class=\"btn\"><i class= \"fab fa-slack\" ></i></a>");
+
+            $("#show").append(html);
+            $('#load').html("");
+            // setTimeout(function (blockcount) {
+             let settag = $("#anchor_"+blockcount+"").next().children("td").find("a").text();       
+              if (settag.indexOf("信義區") != -1) {
+                $("#tag_" + blockcount).append("信義");
+              }
+              else if (settag.indexOf("大安區") != -1) {
+                $("#tag_" + blockcount).append("大安");
+              }
+              else if (settag.indexOf("天龍區") != -1) {
+                $("#tag_" + blockcount).append("天龍");
+				}
+            blockcount++;
+          };
+
+        }
+      });
+      function loading() {
+        $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
+      }
+      $("#gotop").click(function () {
+        jQuery("html,body").animate({
+          scrollTop: 0
+        }, 1000);
+      });
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+          $('#gotop').fadeIn("fast");
+        } else {
+          $('#gotop').stop().fadeOut("fast");
+        }
+      });
+    });
+    // })(window, jQuery);
+	//font-family: 'Noto Sans TC', sans-serif;
+  </script>
+
+  <style type="text/css">
+    body {
+      line-height: 1.7;
+      font-size: 24px;
+    }
+
+    table {
+      font-size: 20px;
+    }
+
+    .btn {
+      border-radius: 40px;
+      font-size: 15px;
+    }
+
+    .form-control {
+      padding: 12px 12px;
+    }
+
+    #gotop {
+      position: fixed;
+      border-radius: 50px;
+      right: 50px;
+      bottom: 25%;
+      padding: 10px 16px;
+      font-size: 35px;
+      background: rgba(0, 62, 177, 0.548);
+      color: #FAFCFD;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .select {
+      font-size: 20px;
+    }
+
+    a {
+      font-weight: bold;
+    }
+
+    .rwd-table {
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .rwd-table tr:nth-of-type(2n) {
+      background: #eee;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      margin: 0.5em 1em;
+    }
+
+    .rwd-table {
+      min-width: 100%;
+    }
+
+    .rwd-table th {
+      display: none;
+    }
+
+    .rwd-table td {
+      display: block;
+    }
+
+    .rwd-table td:before {
+      content: attr(data-th) " : ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      text-align: left;
+    }
+
+    .rwd-table th,
+    .rwd-table td:before {
+      color: #D20B2A;
+      font-weight: bold;
+    }
+
+    @media (min-width: 3000px) {
+      .rwd-table td:before {
+        display: none;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        display: table-cell;
+        padding: 0.25em 0.5em;
+      }
+      .rwd-table th:first-child,
+      .rwd-table td:first-child {
+        padding-left: 0;
+      }
+      .rwd-table th:last-child,
+      .rwd-table td:last-child {
+        padding-right: 0;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        padding: 1em !important;
+      }
+    }
+
+    @media screen and (max-width:1000px) {
+      h3 {
+        font-size: 50px;
+      }
+      .form-control {
+        font-size: 27px;
+      }
+      .select {
+        font-size: 35px;
+      }
+      body {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="col-xs-12 col-sm-12  col-md-12" style="color: rgba(0, 0, 0, 0.87); background-color: rgba(0, 62, 177, 0.548); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 0px; position: relative; z-index: 1100; width: 110%; display: flex; padding-left: 24px; padding-right: 24px;">
+    <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 1 1 0%;">
+      <i class="fas fa-chess-rook"></i>TEST物件查詢</h1>
+  </div>
+  <div id="gotop">˄</div>
+  <div class="row">
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <h3 class="post-title">
+        案件編號或地址:
+      </h3>
+      <input type="text" name="codename" id="codename" placeholder="案件編號或地址" class="form-control" />
+    </div>
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <h3 class="post-title">
+        租金:
+      </h3>
+      <input type="text" name="rent" id="rent" placeholder="(元)以下" class="form-control" />
+    </div>
+
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <h3 class="post-title">
+        選擇要查詢的地區:
+        <div id="ErrorBlock" style="color:red;"></div>
+      </h3>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c1">
+        <input style="zoom: 1.3" id="c1" type="checkbox" value="0" name="block"> 信義區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c2">
+        <input style="zoom: 1.3" id="c2" type="checkbox" value="552127149" name="block"> 大安區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c3">
+        <input style="zoom: 1.3" id="c3" type="checkbox" value="1852831626" name="block"> 天龍區
+      </label>
+    </div>
+	    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
+        <i class="fab fa-sistrix"></i>Get</button>
+      <div id=anchor> </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div id="load" style="display:block; margin:auto;text-align: center;"></div>
+        <table id="show" class="rwd-table">
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

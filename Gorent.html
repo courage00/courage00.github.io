@@ -4,18 +4,318 @@
 <head>
   <meta charset="utf-8">
   <script type="Text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="js/main.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/flexslider.css">
+  <script>
+    $(function () {
+      // (function (window, $) {
+      $("#Submit").click(function () {
+        $("#show").html("");
+        $('#anchor').html("");
+        let CheckBoxList = [];//存部分同意
+        let BlockList = [];//存單表單多重區域
+        for (let i = 1; i <= 16; i++) {  //存多選
+          if ($("#c" + i).prop('checked') == true) {
+            switch (i) {
+              case 1:
+                CheckBoxList.push(1700530628);//信義
+                BlockList.push("信義區");
+                break;
+              case 2:
+                CheckBoxList.push(1815303605);//大安
+                BlockList.push("大安區");
+                break;
+              case 3:
+                CheckBoxList.push(1506220121);//中山
+                BlockList.push("中山區");
+                break;
+              case 4:
+                CheckBoxList.push(1261815181);//松山
+                BlockList.push("松山區");
+                break;
+              case 5:
+                CheckBoxList.push(1345673982);//中正
+                BlockList.push("中正區");
+                break;
+              case 6:
+                CheckBoxList.push(1345673982);//文山
+                BlockList.push("文山區");
+                break;
+              case 7:
+                CheckBoxList.push(643981330);//三重
+                BlockList.push("三重區");
+                break;
+              case 8:
+                CheckBoxList.push(643981330);//板橋
+                BlockList.push("板橋區");
+                break;
+              case 9:
+                CheckBoxList.push(751405492);//大同
+                BlockList.push("大同區");
+                break;
+              case 10:
+                CheckBoxList.push(751405492);//萬華
+                BlockList.push("萬華區");
+                break;
+              case 11:
+                CheckBoxList.push(1187932245);//新店
+                BlockList.push("新店區");
+                break;
+              case 12:
+                CheckBoxList.push(1187932245);//中和
+                BlockList.push("中和區");
+                break;
+              case 13:
+                CheckBoxList.push(1187932245);//永和
+                BlockList.push("永和區");
+                break;
+              case 14:
+                CheckBoxList.push(958354181);//士林
+                BlockList.push("士林區");
+                break;
+              case 15:
+                CheckBoxList.push(958354181);//南港
+                BlockList.push("南港區");
+                break;
+              case 16:
+                CheckBoxList.push(958354181);//內湖
+                BlockList.push("內湖區");
+                break;
+            }
+          }
+        }
+        // console.log(CheckBoxList.length);
+        if (CheckBoxList.length == 0) {
+          CheckBoxList = [1700530628, 1815303605, 1506220121, 1261815181, 1345673982, 1345673982, 643981330, 643981330, 751405492,
+            751405492, 1187932245, 1187932245, 1187932245, 958354181, 958354181, 958354181];
+          BlockList = ["信義區", "大安區", "中山區", "松山區", "中正區", "文山區", "三重區", "板橋區", "大同區", "萬華區",
+            "新店區", "中和區", "永和區", "士林區", "南港區", "內湖區"];
+        }
+
+
+
+        let sheetID = "1QhRpcYEix-oyShiGgP4JwV4nBK-VXT92lk_jP9CtUTg"; // 試算表代號
+        let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CG%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
+        let rent = $.trim($("#rent").val());
+        let codename = $.trim($("#codename").val());
+        //let address = $.trim($("#address").val());
+        let callback = "callback"; // 回呼函數名稱
+        let blockcount = 1;//區塊命名
+
+        for (let x = 0; x < CheckBoxList.length; x++) {
+          loading();
+          let gid = CheckBoxList[x]; // 工作表代號
+          let blocks = BlockList[x]; //查詢區域
+          let anchorhr = new Array(9);
+          anchorhr[x] = gid;
+          let Dataurl = "https://spreadsheets.google.com/tq?tqx=responseHandler:" + callback + "&tq=" + sql;
+          if (codename != "") {
+            Dataurl += "+%28B+Like+%27%25" + escape(codename) + "%25%27+or+" + "+I+Like+%27%25" + escape(codename) + "%25%27%29+and+";
+          }
+          if (blocks != "") {
+            Dataurl += "+H+Like+%27%25" + escape(blocks) + "%25%27+and+";
+          }
+          if (rent != "") {
+            Dataurl += "+J%3C%3D" + rent + "+order+by+J+";
+          }
+          else {
+            Dataurl += "+1%3D1+";
+          }
+          Dataurl += "&key=" + sheetID + "&gid=" + gid;
+          console.log(Dataurl);
+          // console.log(gid);
+          $.getScript(Dataurl);
+          // $("#show").append("<hr id=\"anchor" + gid + "\">");
+          window[callback] = function (json) {
+            let rowArray = json.table.rows;
+            let rowLength = rowArray.length;
+            let html = "";
+            let i;
+            let j;
+            let dataGroup;
+            let dataLength;
+            for (i = 0; i < rowLength; i++) {
+              dataGroup = rowArray[i].c;
+              dataLength = dataGroup.length;
+              html += "<tr>";
+              for (j = 0; j < dataLength; j++) {
+                if (!dataGroup[j]) {
+                  continue;
+                }
+                switch (j) {
+                  case 0:
+                    html += "<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 1:
+                    html += "<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 2:
+                    html += "<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 3:
+                    html += "<td data-th=\"服務費\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 4:
+                    html += "<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 5:
+                    html += "<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 6:
+                    html += "<td data-th=\"電話\"><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>";
+                    break;
+                  case 7:
+                    html += "<td data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 8:
+                    html += "<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>";
+                    break;
+                  case 9:
+                    html += "<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 10:
+                    html += "<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 11:
+                    html += "<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 12:
+                    html += "<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    break;
+                  case 13:
+                    html += "<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 14:
+                    html += "<td data-th=\"現況\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 15:
+                    html += "<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 16:
+                    html += "<td data-th=\"管理費\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 17:
+                    html += "<td data-th=\"開伙\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 18:
+                    html += "<td data-th=\"寵物\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 19:
+                    html += "<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    break;
+                  case 20:
+                    html += "<td data-th=\"原網址\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    break;
+                  case 21:
+                    html += "<td data-th=\"樂屋網\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    break;
+                }
+                html += (dataGroup[j].f || dataGroup[j].v || "") + " ";
+              }
+              html += "</tr>";
+            }
+            $("#show").append("<hr id=\"anchor_" + blockcount + "\">");
+            $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
+
+            $("#show").append(html);
+            
+            // setTimeout(function (blockcount) {
+            let settag = $("#anchor_" + blockcount + "").next().children("td").find("a").text();
+            if (settag.indexOf("信義區") != -1) {
+              $("#tag_" + blockcount).append("信義");
+            }
+            else if (settag.indexOf("大安區") != -1) {
+              $("#tag_" + blockcount).append("大安");
+            }
+            else if (settag.indexOf("中山區") != -1) {
+              $("#tag_" + blockcount).append("中山");
+            }
+            else if (settag.indexOf("松山區") != -1) {
+              $("#tag_" + blockcount).append("松山");
+            }
+            else if (settag.indexOf("中正區") != -1) {
+              $("#tag_" + blockcount).append("中正");
+            }
+            else if (settag.indexOf("文山區") != -1) {
+              $("#tag_" + blockcount).append("文山");
+            }
+            else if (settag.indexOf("三重區") != -1) {
+              $("#tag_" + blockcount).append("三重");
+            }
+            else if (settag.indexOf("板橋區") != -1) {
+              $("#tag_" + blockcount).append("板橋");
+            }
+            else if (settag.indexOf("大同區") != -1) {
+              $("#tag_" + blockcount).append("大同");
+            }
+            else if (settag.indexOf("萬華區") != -1) {
+              $("#tag_" + blockcount).append("萬華");
+            }
+            else if (settag.indexOf("新店區") != -1) {
+              $("#tag_" + blockcount).append("新店");
+            }
+            else if (settag.indexOf("永和區") != -1) {
+              $("#tag_" + blockcount).append("永和");
+            }
+            else if (settag.indexOf("中和區") != -1) {
+              $("#tag_" + blockcount).append("中和");
+            }
+            else if (settag.indexOf("士林區") != -1) {
+              $("#tag_" + blockcount).append("士林");
+            }
+            else if (settag.indexOf("南港區") != -1) {
+              $("#tag_" + blockcount).append("南港");
+            }
+            else if (settag.indexOf("內湖區") != -1) {
+              $("#tag_" + blockcount).append("內湖");
+            }
+            else {
+              $("#tag_" + blockcount).remove();
+            }
+             $('#load').html("");
+            // }, 100, blockcount)
+            blockcount++;
+          };
+
+        }
+       
+      });
+      function loading() {
+        $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
+      }
+      $("#gotop").click(function () {
+        jQuery("html,body").animate({
+          scrollTop: 0
+        }, 1000);
+      });
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+          $('#gotop').fadeIn("fast");
+        } else {
+          $('#gotop').stop().fadeOut("fast");
+        }
+      });
+    });
+    // })(window, jQuery);
+	//font-family: 'Noto Sans TC', sans-serif;
+  </script>
 
   <style type="text/css">
     body {
       line-height: 1.7;
       font-size: 24px;
+    }
+
+    .anchor {
+      font-size: 24px;
+    }
+
+    .zoom {
+      zoom: 1.3;
     }
 
     table {
@@ -35,9 +335,9 @@
       position: fixed;
       border-radius: 50px;
       right: 50px;
-      bottom: 26%;
+      bottom: 25%;
       padding: 10px 16px;
-      font-size: 36px;
+      font-size: 35px;
       background: rgba(0, 62, 177, 0.548);
       color: #FAFCFD;
       cursor: pointer;
@@ -120,25 +420,46 @@
     }
 
     @media screen and (max-width:1000px) {
+      h1 {
+        font-size: 80px;
+        line-height: 120px!important;
+        height: 120px!important;
+      }
       h3 {
-        font-size: 50px;
+        font-size: 64px;
       }
       .form-control {
-        font-size: 27px;
+        height: 64px;
+        font-size: 50px;
       }
       .select {
         font-size: 35px;
       }
       body {
-        font-size: 32px;
+        font-size: 55px;
+      }
+      .zoom {
+        zoom: 3;
+      }
+      .btn {
+        font-size: 55px;
+      }
+      #gotop {
+        font-size: 64px;
+      }
+      .anchor {
+        font-size: 55px;
+      }
+      table {
+        font-size: 38px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="col-xs-12 col-sm-12  col-md-12" style="color: rgba(0, 0, 0, 0.87); background-color: rgba(0, 62, 177, 0.548); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 0px; position: relative; z-index: 1100; width: 110%; display: flex; padding-left: 24px; padding-right: 24px;">
-    <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 1 1 0%;">
+  <div style="color: rgba(0, 0, 0, 0.87); background-color: rgba(0, 62, 177, 0.548); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 0px; position: relative; width: 110%; display: flex; padding-left: 24px; padding-right: 24px;">
+    <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 110%;">
       <i class="fas fa-chess-rook"></i>GORENT 物件查詢</h1>
   </div>
   <div id="gotop">˄</div>
@@ -147,13 +468,13 @@
       <h3 class="post-title">
         案件編號或地址:
       </h3>
-      <input style="width:75%;"  type="text" name="codename" id="codename" placeholder="案件編號或地址" class="form-control" />
+      <input type="text" style="width:75%;" name="codename" id="codename" placeholder="案件編號或地址" class="form-control" />
     </div>
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
       <h3 class="post-title">
         租金:
       </h3>
-      <input  style="width:75%;" type="text" name="rent" id="rent" placeholder="(元)以下" class="form-control" />
+      <input type="text" style="width:75%;" name="rent" id="rent" placeholder="(元)以下" class="form-control" />
     </div>
 
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
@@ -164,47 +485,82 @@
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c1">
-        <input style="zoom: 1.3" id="c1" type="checkbox" value="1700530628" name="block"> 信義區
+        <input class="zoom" id="c1" type="checkbox" value="1700530628" name="block"> 信義區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c2">
-        <input style="zoom: 1.3" id="c2" type="checkbox" value="1815303605" name="block"> 大安區
+        <input class="zoom" id="c2" type="checkbox" value="1815303605" name="block"> 大安區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c3">
-        <input style="zoom: 1.3" id="c3" type="checkbox" value="1506220121" name="block"> 中山區
+        <input class="zoom" id="c3" type="checkbox" value="1506220121" name="block"> 中山區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c4">
-        <input style="zoom: 1.3" id="c4" type="checkbox" value="1261815181" name="block"> 松山區
+        <input class="zoom" id="c4" type="checkbox" value="1261815181" name="block"> 松山區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c5">
-        <input style="zoom: 1.3" id="c5" type="checkbox" value="1345673982" name="block"> 中正文山
+        <input class="zoom" id="c5" type="checkbox" value="1345673982" name="block"> 中正區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c6">
-        <input style="zoom: 1.3" id="c6" type="checkbox" value="643981330" name="block"> 三重板橋
+        <input class="zoom" id="c6" type="checkbox" value="1345673982" name="block"> 文山區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c7">
-        <input style="zoom: 1.3" id="c7" type="checkbox" value="751405492" name="block"> 大同萬華
+        <input class="zoom" id="c7" type="checkbox" value="643981330" name="block"> 三重區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c8">
-        <input style="zoom: 1.3" id="c8" type="checkbox" value="1187932245" name="block"> 新店雙合
+        <input class="zoom" id="c8" type="checkbox" value="643981330" name="block"> 板橋區
       </label>
     </div>
     <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
       <label for="c9">
-        <input style="zoom: 1.3" id="c9" type="checkbox" value="958354181" name="block"> 士林南港內湖
+        <input class="zoom" id="c9" type="checkbox" value="751405492" name="block"> 大同區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c10">
+        <input class="zoom" id="c10" type="checkbox" value="751405492" name="block"> 萬華區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c11">
+        <input class="zoom" id="c1" type="checkbox" value="1187932245" name="block"> 新店區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c12">
+        <input class="zoom" id="c12" type="checkbox" value="1187932245" name="block"> 中和區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c13">
+        <input class="zoom" id="c13" type="checkbox" value="1187932245" name="block"> 永和區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c14">
+        <input class="zoom" id="c14" type="checkbox" value="958354181" name="block"> 士林區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c15">
+        <input class="zoom" id="c15" type="checkbox" value="958354181" name="block"> 南港區
+      </label>
+    </div>
+    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+      <label for="c16">
+        <input class="zoom" id="c16" type="checkbox" value="958354181" name="block"> 內湖區
       </label>
     </div>
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
@@ -223,7 +579,7 @@
             <option value="958354181">士林南港內湖區</option>
         
           </select> -->
-      <button id="Submit" class="btn btn-info  mt-ladda-btn ladda-button btn-circle">
+      <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
         <i class="fab fa-sistrix"></i>Get</button>
       <div id=anchor> </div>
     </div>
@@ -234,7 +590,7 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <div id="load" style="display:block; margin:auto;text-align: center;"></div>
-        <table id="show" class="rwd-table">
+        <table style="position: relative;" id="show" class="rwd-table">
         </table>
       </div>
     </div>

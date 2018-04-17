@@ -105,6 +105,7 @@
         //let address = $.trim($("#address").val());
         let callback = "callback"; // 回呼函數名稱
         let blockcount = 1;//區塊命名
+        //let rentList=[];
 
         for (let x = 0; x < CheckBoxList.length; x++) {
           loading();
@@ -126,14 +127,17 @@
             Dataurl += "+1%3D1+";
           }
           Dataurl += "&key=" + sheetID + "&gid=" + gid;
-          console.log(Dataurl);
+          //console.log(Dataurl);
           // console.log(gid);
           $.getScript(Dataurl);
           // $("#show").append("<hr id=\"anchor" + gid + "\">");
+          if(1!=1){
+
+          }
           window[callback] = function (json) {
             let rowArray = json.table.rows;
             let rowLength = rowArray.length;
-            let html = "";
+            let html = [];
             let i;
             let j;
             let dataGroup;
@@ -141,87 +145,88 @@
             for (i = 0; i < rowLength; i++) {
               dataGroup = rowArray[i].c;
               dataLength = dataGroup.length;
-              html += "<tr>";
+              html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
                 if (!dataGroup[j]) {
                   continue;
                 }
                 switch (j) {
                   case 0:
-                    html += "<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 1:
-                    html += "<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 2:
-                    html += "<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 3:
-                    html += "<td data-th=\"服務費\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"服務費\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 4:
-                    html += "<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 5:
-                    html += "<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 6:
-                    html += "<td data-th=\"電話\"><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>";
+                    html.push("<td data-th=\"電話\"><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 7:
-                    html += "<td data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 8:
-                    html += "<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>";
+                    html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 9:
-                    html += "<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
-                    html += "<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 11:
-                    html += "<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 12:
-                    html += "<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>";
+                    html.push("<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 13:
-                    html += "<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 14:
-                    html += "<td data-th=\"現況\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"現況\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 15:
-                    html += "<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 16:
-                    html += "<td data-th=\"管理費\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"管理費\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 17:
-                    html += "<td data-th=\"開伙\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"開伙\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 18:
-                    html += "<td data-th=\"寵物\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"寵物\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 19:
-                    html += "<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>";
+                    html.push("<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 20:
-                    html += "<td data-th=\"原網址\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    html.push("<td data-th=\"原網址\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
-                    html += "<td data-th=\"樂屋網\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>";
+                    html.push("<td data-th=\"樂屋網\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                 }
-                html += (dataGroup[j].f || dataGroup[j].v || "") + " ";
+                html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
               }
-              html += "</tr>";
+              html.push("</tr>");
             }
             $("#show").append("<hr id=\"anchor_" + blockcount + "\">");
             $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
 
-            $("#show").append(html);
+            $("#show").append(html.join(''));
             
             // setTimeout(function (blockcount) {
             let settag = $("#anchor_" + blockcount + "").next().children("td").find("a").text();
@@ -288,6 +293,7 @@
         $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
       }
       $("#gotop").click(function () {
+         //console.log(rentList);
         jQuery("html,body").animate({
           scrollTop: 0
         }, 1000);
@@ -336,7 +342,7 @@
       border-radius: 50px;
       right: 50px;
       bottom: 25%;
-      padding: 10px 16px;
+      padding: 12px 18px;
       font-size: 35px;
       background: rgba(0, 62, 177, 0.548);
       color: #FAFCFD;

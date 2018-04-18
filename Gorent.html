@@ -131,7 +131,7 @@
           // console.log(gid);
           $.getScript(Dataurl);
           // $("#show").append("<hr id=\"anchor" + gid + "\">");
-          if(1!=1){
+          if (1 != 1) {
 
           }
           window[callback] = function (json) {
@@ -179,8 +179,8 @@
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 9:
-                    html.push("<td data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
-                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
+                    html.push("<td class=\"rent\" data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
                     html.push("<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
@@ -227,7 +227,7 @@
             $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
 
             $("#show").append(html.join(''));
-            
+
             // setTimeout(function (blockcount) {
             let settag = $("#anchor_" + blockcount + "").next().children("td").find("a").text();
             if (settag.indexOf("信義區") != -1) {
@@ -281,23 +281,41 @@
             else {
               $("#tag_" + blockcount).remove();
             }
-             $('#load').html("");
+            $('#load').html("");
             // }, 100, blockcount)
             blockcount++;
           };
 
         }
-       
       });
-      function loading() {
-        $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
-      }
+      $("#Sort").click(function () {
+        // setTimeout(function () {
+        let rows = $("#show").find('tr').toArray().sort(comparer);
+        //console.log(rows);
+        $("#anchor").empty();
+        $("#show").empty().html(rows);
+        // }, 6000)
+      });
       $("#gotop").click(function () {
-         //console.log(rentList);
+        //console.log(rentList);
         jQuery("html,body").animate({
           scrollTop: 0
         }, 1000);
       });
+      function loading() {
+        $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
+      }
+      function comparer(a, b) {
+        var valA = getCellValue(a),
+          valB = getCellValue(b);
+        return $.isNumeric(valA) && $.isNumeric(valB) ?
+          valA - valB : valA.localeCompare(valB);
+      }
+      function getCellValue(row) {
+        //console.log($(row).find('.rent').text());
+        return $(row).find('.rent').text();
+      }
+
       $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
           $('#gotop').fadeIn("fast");
@@ -308,6 +326,8 @@
     });
     // })(window, jQuery);
 	//font-family: 'Noto Sans TC', sans-serif;
+  // let rows = $("#show").find('tr:gt(0)').toArray().sort(comparer($(this).index($(".rent"))));
+  // $("#show").children('tbody').empty().html(rows);
   </script>
 
   <style type="text/css">
@@ -570,23 +590,10 @@
       </label>
     </div>
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
-      <!-- <h3 class="post-title">
-            選擇要查詢的地區:
-          </h3>
-          <select style="width:25%;" class="select" name="block">
-            <option value="1700530628">信義區</option>
-            <option value="1815303605">大安區</option>
-            <option value="1506220121">中山區</option>
-            <option value="1345673982">中正文山</option>
-            <option value="1261815181">松山區</option>
-            <option value="643981330">三重板橋</option>
-            <option value="751405492">大同萬華區</option>
-            <option value="1187932245">新店雙合區</option>
-            <option value="958354181">士林南港內湖區</option>
-        
-          </select> -->
       <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
         <i class="fab fa-sistrix"></i>Get</button>
+      <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
+        <i class="fas fa-sort-numeric-down"></i>排序(全部)</button>
       <div id=anchor> </div>
     </div>
   </div>

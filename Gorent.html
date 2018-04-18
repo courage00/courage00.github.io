@@ -229,7 +229,7 @@
             $("#show").append(html.join(''));
 
             // setTimeout(function (blockcount) {
-            let settag = $("#anchor_" + blockcount + "").next().children("td").find("a").text();
+            let settag = $("#anchor_" + blockcount + "").next().children(".area").text();
             if (settag.indexOf("信義區") != -1) {
               $("#tag_" + blockcount).append("信義");
             }

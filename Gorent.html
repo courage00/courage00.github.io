@@ -15,6 +15,7 @@
       // (function (window, $) {
       $("#Submit").on('click',function () {
         $("#Submit").prop("disabled",true);
+	$("#Sort").prop("disabled", true);
         $("#show").html("");
         $('#anchor').html("");
         let CheckBoxList = [];//存部分同意
@@ -231,52 +232,52 @@
 
             // setTimeout(function (blockcount) {
             let settag = $("#anchor_" + blockcount + "").next().children(".area").text();
-            if (settag.indexOf("信義區") != -1) {
+           if (settag=="信義區") {
               $("#tag_" + blockcount).append("信義");
             }
-            else if (settag.indexOf("大安區") != -1) {
+            else if (settag=="大安區") {
               $("#tag_" + blockcount).append("大安");
             }
-            else if (settag.indexOf("中山區") != -1) {
+            else if (settag=="中山區") {
               $("#tag_" + blockcount).append("中山");
             }
-            else if (settag.indexOf("松山區") != -1) {
+            else if (settag=="松山區") {
               $("#tag_" + blockcount).append("松山");
             }
-            else if (settag.indexOf("中正區") != -1) {
+            else if (settag=="中正區") {
               $("#tag_" + blockcount).append("中正");
             }
-            else if (settag.indexOf("文山區") != -1) {
+            else if (settag=="文山區") {
               $("#tag_" + blockcount).append("文山");
             }
-            else if (settag.indexOf("三重區") != -1) {
+            else if (settag=="三重區") {
               $("#tag_" + blockcount).append("三重");
             }
-            else if (settag.indexOf("板橋區") != -1) {
+            else if (settag=="板橋區") {
               $("#tag_" + blockcount).append("板橋");
             }
-            else if (settag.indexOf("大同區") != -1) {
+            else if (settag=="大同區") {
               $("#tag_" + blockcount).append("大同");
             }
-            else if (settag.indexOf("萬華區") != -1) {
+            else if (settag=="萬華區") {
               $("#tag_" + blockcount).append("萬華");
             }
-            else if (settag.indexOf("新店區") != -1) {
+            else if (settag=="新店區") {
               $("#tag_" + blockcount).append("新店");
             }
-            else if (settag.indexOf("永和區") != -1) {
+            else if (settag=="永和區") {
               $("#tag_" + blockcount).append("永和");
             }
-            else if (settag.indexOf("中和區") != -1) {
+            else if (settag=="中和區") {
               $("#tag_" + blockcount).append("中和");
             }
-            else if (settag.indexOf("士林區") != -1) {
+            else if (settag=="士林區") {
               $("#tag_" + blockcount).append("士林");
             }
-            else if (settag.indexOf("南港區") != -1) {
+            else if (settag=="南港區") {
               $("#tag_" + blockcount).append("南港");
             }
-            else if (settag.indexOf("內湖區") != -1) {
+            else if (settag=="內湖區") {
               $("#tag_" + blockcount).append("內湖");
             }
             else {

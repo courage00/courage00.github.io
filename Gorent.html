@@ -13,11 +13,16 @@
   <script>
     $(function () {
       // (function (window, $) {
-      $("#Submit").on('click',function () {
-        $("#Submit").prop("disabled",true);
-	$("#Sort").prop("disabled", true);
+      $("#Submit").on('click', function () {
+        $("#Submit").prop("disabled", true);
+        $("#Sort").prop("disabled", true);
         $("#show").html("");
         $('#anchor').html("");
+         $('#anchor').hide();
+         setTimeout(function(){
+           $('#anchor').show();
+           $('#load').hide();
+         },3000)
         let CheckBoxList = [];//存部分同意
         let BlockList = [];//存單表單多重區域
         for (let i = 1; i <= 16; i++) {  //存多選
@@ -144,6 +149,7 @@
             let j;
             let dataGroup;
             let dataLength;
+            //let bloclName;
             for (i = 0; i < rowLength; i++) {
               dataGroup = rowArray[i].c;
               dataLength = dataGroup.length;
@@ -176,6 +182,7 @@
                     break;
                   case 7:
                     html.push("<td class=\"area\" data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    //bloclName= (dataGroup[j].f || dataGroup[j].v || "") +"";
                     break;
                   case 8:
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
@@ -232,52 +239,52 @@
 
             // setTimeout(function (blockcount) {
             let settag = $("#anchor_" + blockcount + "").next().children(".area").text();
-           if (settag=="信義區") {
+            if (settag == "信義區") {
               $("#tag_" + blockcount).append("信義");
             }
-            else if (settag=="大安區") {
+            else if (settag == "大安區") {
               $("#tag_" + blockcount).append("大安");
             }
-            else if (settag=="中山區") {
+            else if (settag == "中山區") {
               $("#tag_" + blockcount).append("中山");
             }
-            else if (settag=="松山區") {
+            else if (settag == "松山區") {
               $("#tag_" + blockcount).append("松山");
             }
-            else if (settag=="中正區") {
+            else if (settag == "中正區") {
               $("#tag_" + blockcount).append("中正");
             }
-            else if (settag=="文山區") {
+            else if (settag == "文山區") {
               $("#tag_" + blockcount).append("文山");
             }
-            else if (settag=="三重區") {
+            else if (settag == "三重區") {
               $("#tag_" + blockcount).append("三重");
             }
-            else if (settag=="板橋區") {
+            else if (settag == "板橋區") {
               $("#tag_" + blockcount).append("板橋");
             }
-            else if (settag=="大同區") {
+            else if (settag == "大同區") {
               $("#tag_" + blockcount).append("大同");
             }
-            else if (settag=="萬華區") {
+            else if (settag == "萬華區") {
               $("#tag_" + blockcount).append("萬華");
             }
-            else if (settag=="新店區") {
+            else if (settag == "新店區") {
               $("#tag_" + blockcount).append("新店");
             }
-            else if (settag=="永和區") {
+            else if (settag == "永和區") {
               $("#tag_" + blockcount).append("永和");
             }
-            else if (settag=="中和區") {
+            else if (settag == "中和區") {
               $("#tag_" + blockcount).append("中和");
             }
-            else if (settag=="士林區") {
+            else if (settag == "士林區") {
               $("#tag_" + blockcount).append("士林");
             }
-            else if (settag=="南港區") {
+            else if (settag == "南港區") {
               $("#tag_" + blockcount).append("南港");
             }
-            else if (settag=="內湖區") {
+            else if (settag == "內湖區") {
               $("#tag_" + blockcount).append("內湖");
             }
             else {
@@ -285,21 +292,20 @@
             }
             $("#Submit").prop("disabled", false);
             $("#Sort").prop("disabled", false);
-            $('#load').hide();
             // }, 100, blockcount)
             blockcount++;
           };
 
         }
       });
-      $("#Sort").on('click',function () {
+      $("#Sort").on('click', function () {
         $('#load').show();
         let rows = $("#show").find('tr').toArray().sort(comparer);
         $("#anchor").empty();
         $("#show").empty().html(rows);
         setTimeout(() => {
           $('#load').hide();
-        }, 300);
+        }, 2000);
       });
       $("#gotop").click(function () {
         jQuery("html,body").animate({

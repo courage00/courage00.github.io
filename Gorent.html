@@ -158,10 +158,10 @@
                 }
                 switch (j) {
                   case 0:
-                    html.push("<td data-th=\"物件狀態\">" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"物件狀態\"><font class=\"bigger\" >" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 1:
-                    html.push("<td data-th=\"編號\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"編號\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 2:
                     html.push("<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
@@ -179,14 +179,14 @@
                     html.push("<td data-th=\"電話\"><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 7:
-                    html.push("<td class=\"area\" data-th=\"區域\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td  data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //bloclName= (dataGroup[j].f || dataGroup[j].v || "") +"";
                     break;
                   case 8:
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 9:
-                    html.push("<td class=\"rent\" data-th=\"租金\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"租金\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
@@ -220,10 +220,10 @@
                     html.push("<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 20:
-                    html.push("<td data-th=\"原網址\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"原網址\"><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
-                    html.push("<td data-th=\"樂屋網\"><a href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"樂屋網\"><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                 }
                 html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
@@ -515,6 +515,10 @@
       }
       table {
         font-size: 38px;
+      }
+      .bigger{
+        font-size: 45px;
+        font-weight: bold;
       }
     }
   </style>

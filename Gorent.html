@@ -186,7 +186,7 @@
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 9:
-                    html.push("<td data-th=\"租金\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    html.push("<td class=\"rent\" data-th=\"租金\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
@@ -309,12 +309,16 @@
         if (SortNum % 2 != 0) {
           $("#SortIcon").removeClass("fa-sort-numeric-down").addClass("fa-sort-numeric-up");
           if (await reSort()) {
+            $('#load').hide();
+            $("#Sort").prop("disabled", false);
             SortNum++
           }
         }
         else if (SortNum % 2 == 0) {
           $("#SortIcon").removeClass("fa-sort-numeric-up").addClass("fa-sort-numeric-down");
           if (await reSort2()) {
+            $('#load').hide();
+            $("#Sort").prop("disabled", false);
             SortNum++
           }
         }
@@ -323,16 +327,12 @@
         let rows = $("#show").find('tr').toArray().sort(comparer);
         $("#anchor").empty();
         $("#show").empty().html(rows);
-        $('#load').hide();
-        $("#Sort").prop("disabled", false);
         return true;
       };
       function reSort2() {
         let rows = $("#show").find('tr').toArray().sort(comparer2);
         $("#anchor").empty();
         $("#show").empty().html(rows);
-        $('#load').hide();
-        $("#Sort").prop("disabled", false);
         return true;
       };
       // function dogDanceHide(){
@@ -516,7 +516,7 @@
       table {
         font-size: 38px;
       }
-      .bigger{
+      .bigger {
         font-size: 45px;
         font-weight: bold;
       }

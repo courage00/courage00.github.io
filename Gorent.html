@@ -13,7 +13,8 @@
   <script>
     $(function () {
       // (function (window, $) {
-      $("#Submit").on('click',  function () {
+      let SortNum = 1;
+      $("#Submit").on('click', function () {
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
         $("#show").html("");
@@ -125,7 +126,7 @@
             Dataurl += "+H+Like+%27%25" + escape(blocks) + "%25%27+and+";
           }
           if (rent != "") {
-            Dataurl += "+J%3C%3D" + rent + "+order+by+J+";
+            Dataurl += "+J%3C%3D" + rent + "+order+by+J+desc+";
           }
           else {
             Dataurl += "+1%3D1+";
@@ -234,7 +235,7 @@
 
             $("#show").append(html.join(''));
             AsyncCount += await SetAnchorTag(blockcount);
-            if ( AsyncCount== CheckBoxList.length) {
+            if (AsyncCount == CheckBoxList.length) {
               $('#anchor').show();
               $('#load').hide();
               $("#Submit").prop("disabled", false);
@@ -303,15 +304,35 @@
         return 1;
       };
       $("#Sort").on('click', async function testSort() {
+        $("#Sort").prop("disabled", true);
         $('#load').show();
-        if (await reSort()) {
-          $('#load').hide();
+        if (SortNum % 2 != 0) {
+          $("#SortIcon").removeClass("fa-sort-numeric-down").addClass("fa-sort-numeric-up");
+          if (await reSort()) {
+            SortNum++
+          }
+        }
+        else if (SortNum % 2 == 0) {
+          $("#SortIcon").removeClass("fa-sort-numeric-up").addClass("fa-sort-numeric-down");
+          if (await reSort2()) {
+            SortNum++
+          }
         }
       });
       function reSort() {
         let rows = $("#show").find('tr').toArray().sort(comparer);
         $("#anchor").empty();
         $("#show").empty().html(rows);
+        $('#load').hide();
+        $("#Sort").prop("disabled", false);
+        return true;
+      };
+      function reSort2() {
+        let rows = $("#show").find('tr').toArray().sort(comparer2);
+        $("#anchor").empty();
+        $("#show").empty().html(rows);
+        $('#load').hide();
+        $("#Sort").prop("disabled", false);
         return true;
       };
       // function dogDanceHide(){
@@ -322,19 +343,19 @@
           scrollTop: 0
         }, 1000);
       });
-      // function loading() {
-      //   $('#load').html(' Loading...</br><img   style="display:block; margin:auto;" src="images/UyfU4KX.gif"/>');
-      // }
       function comparer(a, b) {
         var valA = getCellValue(a),
           valB = getCellValue(b);
-        return $.isNumeric(valA) && $.isNumeric(valB) ?
-          valA - valB : valA.localeCompare(valB);
-      }
+        return $.isNumeric(valA) && $.isNumeric(valB) ? valB - valA : valB.localeCompare(valA);
+      };
+      function comparer2(c, d) {
+        var valC = getCellValue(c),
+          valD = getCellValue(d);
+        return $.isNumeric(valC) && $.isNumeric(valD) ? valC - valD : valC.localeCompare(valD);
+      };
       function getCellValue(row) {
-        //console.log($(row).find('.rent').text());
-        return $(row).find('.rent').text();
-      }
+        return $(row).find('.rent').text().replace(/,/, "");
+      };
 
       $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
@@ -344,10 +365,6 @@
         }
       });
     });
-    // })(window, jQuery);
-	//font-family: 'Noto Sans TC', sans-serif;
-  // let rows = $("#show").find('tr:gt(0)').toArray().sort(comparer($(this).index($(".rent"))));
-  // $("#show").children('tbody').empty().html(rows);
   </script>
 
   <style type="text/css">
@@ -613,7 +630,7 @@
       <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
         <i class="fab fa-sistrix"></i>Get</button>
       <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
-        <i class="fas fa-sort-numeric-down"></i>排序(全部)</button>
+        <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序</button>
       <div id=anchor> </div>
     </div>
   </div>

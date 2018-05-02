@@ -129,7 +129,7 @@
             Dataurl += "+J%3C%3D" + rent + "+order+by+J+desc+";
           }
           else {
-            Dataurl += "+1%3D1+";
+            Dataurl += "+1%3D1+";//+"+order+by+J+desc+";
           }
           Dataurl += "&key=" + sheetID + "&gid=" + gid;
           //console.log(Dataurl);
@@ -630,7 +630,7 @@
       <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
         <i class="fab fa-sistrix"></i>Get</button>
       <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
-        <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序</button>
+        <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序全部</button>
       <div id=anchor> </div>
     </div>
   </div>

@@ -230,10 +230,10 @@
                     html.push("<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 20:
-                    html.push("<td  data-th=\"原網址\"><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"原網址\"><a class=\"bigger\" target=\"_blank\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
-                    html.push("<td  data-th=\"樂屋網\"><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"樂屋網\"><a class=\"bigger\" target=\"_blank\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                 }
                 html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");

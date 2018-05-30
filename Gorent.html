@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="css/flexslider.css">
   <script>
     // 寫這段code的時候，只有上帝和我知道它是幹嘛的 
-    // 現在只有上帝知道  by2018ʕ•͡ᴥ•ʔ
+    // 現在只有上帝知道  by2018
     console.log("ʕ•͡ᴥ•ʔ");
     console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
     console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
@@ -33,10 +33,6 @@
         let CheckBoxList = [];//存部分同意
         let BlockList = [];//存單表單多重區域
         let AsyncCount = 0;
-        if($("#SortIcon").hasClass("fa-sort-numeric-down")){
-        $("#SortIcon").removeClass("fa-sort-numeric-down").addClass("fa-sort-numeric-up");
-        SortNum++;
-        };
         for (let i = 1; i <= 16; i++) {  //存多選
           if ($("#c" + i).prop('checked') == true) {
             switch (i) {
@@ -118,8 +114,9 @@
 
 
         let sheetID = "1QhRpcYEix-oyShiGgP4JwV4nBK-VXT92lk_jP9CtUTg"; // 試算表代號
-        let sql = "select+A%2CB%2CC%2CD%2CE%2CF%2CG%2CH%2CI%2CJ%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
+        let sql = "select+A%2CB%2CH%2CF%2CC%2CD%2CE%2CI%2CJ%2CG%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
         let rent = $.trim($("#rent").val());
+        let rentLow = $.trim($("#rentLow").val());
         let codename = $.trim($("#codename").val());
         //let address = $.trim($("#address").val());
         let callback = "callback"; // 回呼函數名稱
@@ -139,11 +136,26 @@
           if (blocks != "") {
             Dataurl += "+H+Like+%27%25" + escape(blocks) + "%25%27+and+";
           }
-          if (rent != "") {
-            Dataurl += "+J%3C%3D" + rent + "+order+by+J+desc+";
+          if (rentLow != "") {
+            Dataurl += "+J%3E%3D" + rentLow;
+            if(rent == ""){
+               Dataurl += "+order+by+J+asc+";
+            }
+            else{
+              Dataurl += "+and+";
+            }
           }
-          else {
-            Dataurl += "+1%3D1+";//+"+order+by+J+desc+";
+          if (rent != "") {
+            Dataurl += "+J%3C%3D" + rent ;
+            if (rentLow != "") {
+              Dataurl += "+order+by+J+asc+";
+            }
+            else{
+              Dataurl += "+order+by+J+desc+";
+            }
+          }
+          else if  (rentLow ==""){
+            Dataurl += "+1%3D1+";
           }
           Dataurl += "&key=" + sheetID + "&gid=" + gid;
           //console.log(Dataurl);
@@ -164,87 +176,90 @@
             //let bloclName;
             for (i = 0; i < rowLength; i++) {
               dataGroup = rowArray[i].c;
+               if(dataGroup[0]!=null){
+                 continue; 
+               }
               dataLength = dataGroup.length;
               html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
                 if (!dataGroup[j]) {
-                  continue;
+                  continue; 
                 }
                 switch (j) {
                   case 0:
-                    html.push("<td data-th=\"物件狀態\"><font class=\"bigger\" >" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    html.push("<td data-th=\"物件狀態\" ><font class=\"bigger\" >" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 1:
-                    html.push("<td data-th=\"編號\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 2:
-                    html.push("<td data-th=\"收件日期\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
-                    break;
-                  case 3:
-                    html.push("<td data-th=\"服務費\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
-                    break;
-                  case 4:
-                    html.push("<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
-                    break;
-                  case 5:
-                    html.push("<td data-th=\"姓名\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
-                    break;
-                  case 6:
-                    html.push("<td data-th=\"電話\"><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
-                    break;
-                  case 7:
-                    html.push("<td  class=\"area\" data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    html.push("<td  class=\"area bigger-width\" data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //bloclName= (dataGroup[j].f || dataGroup[j].v || "") +"";
                     break;
-                  case 8:
+                  case 3:
+                    html.push("<td data-th=\"姓名\"><font class=\"bigger\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    break;
+                  case 4:
+                    html.push("<td data-th=\"收件日期\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 5:
+                    html.push("<td data-th=\"服務費\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 6:
+                    html.push("<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 7:
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
-                  case 9:
-                    html.push("<td class=\"rent\" data-th=\"租金\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                  case 8:
+                    html.push("<td class=\"rent\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
+                  case 9:
+                    html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    break;
                   case 10:
-                    html.push("<td data-th=\"含\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"含\"  class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 11:
-                    html.push("<td data-th=\"格局\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"格局\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 12:
-                    html.push("<td data-th=\"坪數\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"坪數\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 13:
-                    html.push("<td data-th=\"型態\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"型態\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 14:
-                    html.push("<td data-th=\"現況\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"現況\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 15:
-                    html.push("<td data-th=\"電\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"電\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 16:
-                    html.push("<td data-th=\"管理費\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"管理費\" class=\"halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 17:
-                    html.push("<td data-th=\"開伙\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"開伙\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 18:
-                    html.push("<td data-th=\"寵物\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"寵物\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 19:
-                    html.push("<td data-th=\"案名\">" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 20:
-                    html.push("<td  data-th=\"原網址\"><a class=\"bigger\" target=\"_blank\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
-                    html.push("<td  data-th=\"樂屋網\"><a class=\"bigger\" target=\"_blank\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                 }
                 html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
               }
               html.push("</tr>");
             }
-            $("#show").append("<hr id=\"anchor_" + blockcount + "\">");
+            $("#show").append("<hr id=\"anchor_" + blockcount + "\" >");
             $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
 
             $("#show").append(html.join(''));
@@ -313,7 +328,8 @@
           $("#tag_" + blockcount).append("內湖");
         }
         else {
-          $("#tag_" + blockcount).remove();
+          $("#tag_" + blockcount).remove();    //移除沒資料的區域tag
+          $("#anchor_" + blockcount).remove(); //刪分隔線        
         }
         return 1;
       };
@@ -440,7 +456,7 @@
 
     .rwd-table th,
     .rwd-table td {
-      margin: 0.5em 1em;
+      margin: 0.5px;
     }
 
     .rwd-table {
@@ -497,6 +513,9 @@
     }
 
     @media screen and (max-width:1000px) {
+    .rwd-table td {
+      display: inline-grid;
+    }
       h1 {
         font-size: 80px;
         line-height: 120px!important;
@@ -534,6 +553,24 @@
         font-size: 45px;
         font-weight: bold;
       }
+      .bigger-name{
+        width: 6em;
+      }
+      .bigger-width{
+        width: 4em;
+      }
+      .projecct-name{
+        width: 20em;
+      }
+      .halfem{
+        width: 8em;
+      }
+      .halfem-5{
+        width: 5em;
+      }
+      .halfem-20{
+        width: 20em;
+      }
     }
   </style>
 </head>
@@ -545,17 +582,20 @@
   </div>
   <div id="gotop">˄</div>
   <div class="row">
-    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-11 col-md-offset-1">
       <h3 class="post-title">
         案件編號或地址:
       </h3>
       <input type="text" style="width:75%;" name="codename" id="codename" placeholder="案件編號或地址" class="form-control" />
     </div>
-    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-1 col-md-offset-1">
       <h3 class="post-title">
         租金:
       </h3>
-      <input type="text" style="width:75%;" name="rent" id="rent" placeholder="(元)以下" class="form-control" />
+        </div>
+      <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-0" style="display:inline-flex;margin-top:18px" >
+      <input type="text" style="width:35%;" name="rentLow" id="rentLow" placeholder="最低" class="form-control" />~
+      <input type="text" style="width:35%;" name="rent" id="rent" placeholder="最高" class="form-control" />元
     </div>
 
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">

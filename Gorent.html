@@ -6,6 +6,10 @@
   <script type="Text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
     crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -138,23 +142,23 @@
           }
           if (rentLow != "") {
             Dataurl += "+J%3E%3D" + rentLow;
-            if(rent == ""){
-               Dataurl += "+order+by+J+asc+";
+            if (rent == "") {
+              Dataurl += "+order+by+J+asc+";
             }
-            else{
+            else {
               Dataurl += "+and+";
             }
           }
           if (rent != "") {
-            Dataurl += "+J%3C%3D" + rent ;
+            Dataurl += "+J%3C%3D" + rent;
             if (rentLow != "") {
               Dataurl += "+order+by+J+asc+";
             }
-            else{
+            else {
               Dataurl += "+order+by+J+desc+";
             }
           }
-          else if  (rentLow ==""){
+          else if (rentLow == "") {
             Dataurl += "+1%3D1+";
           }
           Dataurl += "&key=" + sheetID + "&gid=" + gid;
@@ -176,14 +180,14 @@
             //let bloclName;
             for (i = 0; i < rowLength; i++) {
               dataGroup = rowArray[i].c;
-               if(dataGroup[0]!=null){
-                 continue; 
-               }
+              if (dataGroup[0] != null) {
+                continue;
+              }
               dataLength = dataGroup.length;
               html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
                 if (!dataGroup[j]) {
-                  continue; 
+                  continue;
                 }
                 switch (j) {
                   case 0:
@@ -373,6 +377,32 @@
           scrollTop: 0
         }, 1000);
       });
+      $("#FiveTen").click(function () {
+        $("#rentLow").val(5000);
+        $("#rent").val(10000);
+      });
+      $("#TenFifteen").click(function () {
+        $("#rentLow").val(10000);
+        $("#rent").val(150000);
+      });
+      $("#FifteenTwenty").click(function () {
+        $("#rentLow").val(15000);
+        $("#rent").val(20000);
+      });
+      $("#TwentyUP").click(function () {
+        $("#rentLow").val(20000);
+        $("#rent").val("");
+      });
+      $("#selectBlock").click(function () {
+        if ($("#collapseBlock").is(":visible")) {
+          $("#collapseBlock").hide();
+          $("#BlockIcon").removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
+        }
+        else {
+          $("#collapseBlock").show();
+          $("#BlockIcon").removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
+        }
+      });
       function comparer(a, b) {
         var valA = getCellValue(a),
           valB = getCellValue(b);
@@ -513,9 +543,9 @@
     }
 
     @media screen and (max-width:1000px) {
-    .rwd-table td {
-      display: inline-grid;
-    }
+      .rwd-table td {
+        display: inline-grid;
+      }
       h1 {
         font-size: 80px;
         line-height: 120px!important;
@@ -553,22 +583,22 @@
         font-size: 45px;
         font-weight: bold;
       }
-      .bigger-name{
+      .bigger-name {
         width: 6em;
       }
-      .bigger-width{
+      .bigger-width {
         width: 4em;
       }
-      .projecct-name{
+      .projecct-name {
         width: 20em;
       }
-      .halfem{
+      .halfem {
         width: 8em;
       }
-      .halfem-5{
+      .halfem-5 {
         width: 5em;
       }
-      .halfem-20{
+      .halfem-20 {
         width: 20em;
       }
     }
@@ -592,97 +622,109 @@
       <h3 class="post-title">
         租金:
       </h3>
-        </div>
-      <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-0" style="display:inline-flex;margin-top:18px" >
+    </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-0" style="display:inline-flex;margin-top:18px">
       <input type="text" style="width:35%;" name="rentLow" id="rentLow" placeholder="最低" class="form-control" />~
       <input type="text" style="width:35%;" name="rent" id="rent" placeholder="最高" class="form-control" />元
     </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-1" style="margin-top:18px">
+      <button id="FiveTen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">5K~10K</button>
+      <button id="TenFifteen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">10K~15K</button>
+      <button id="FifteenTwenty" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">15K~20K</button>
+      <button id="TwentyUP" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">20K
+        <i class="fas fa-level-up-alt"></i>
+      </button>
+    </div>
+
 
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
-      <h3 class="post-title">
-        選擇要查詢的地區:
-        <div id="ErrorBlock" style="color:red;"></div>
+      <h3 class="post-title" id="selectBlock">
+        選擇要查詢的地區
+        <i id="BlockIcon" class="fas fa-angle-double-up"></i>
       </h3>
+
     </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c1">
-        <input class="zoom" id="c1" type="checkbox" value="1700530628" name="block"> 信義區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c2">
-        <input class="zoom" id="c2" type="checkbox" value="1815303605" name="block"> 大安區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c3">
-        <input class="zoom" id="c3" type="checkbox" value="1506220121" name="block"> 中山區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c4">
-        <input class="zoom" id="c4" type="checkbox" value="1261815181" name="block"> 松山區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c5">
-        <input class="zoom" id="c5" type="checkbox" value="1345673982" name="block"> 中正區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c6">
-        <input class="zoom" id="c6" type="checkbox" value="1345673982" name="block"> 文山區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c7">
-        <input class="zoom" id="c7" type="checkbox" value="643981330" name="block"> 三重區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c8">
-        <input class="zoom" id="c8" type="checkbox" value="643981330" name="block"> 板橋區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c9">
-        <input class="zoom" id="c9" type="checkbox" value="751405492" name="block"> 大同區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c10">
-        <input class="zoom" id="c10" type="checkbox" value="751405492" name="block"> 萬華區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c11">
-        <input class="zoom" id="c11" type="checkbox" value="1187932245" name="block"> 新店區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c12">
-        <input class="zoom" id="c12" type="checkbox" value="1187932245" name="block"> 中和區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c13">
-        <input class="zoom" id="c13" type="checkbox" value="1187932245" name="block"> 永和區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c14">
-        <input class="zoom" id="c14" type="checkbox" value="958354181" name="block"> 士林區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c15">
-        <input class="zoom" id="c15" type="checkbox" value="958354181" name="block"> 南港區
-      </label>
-    </div>
-    <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
-      <label for="c16">
-        <input class="zoom" id="c16" type="checkbox" value="958354181" name="block"> 內湖區
-      </label>
+    <div class="row" id="collapseBlock">
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c1">
+          <input class="zoom" id="c1" type="checkbox" value="1700530628" name="block"> 信義區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c2">
+          <input class="zoom" id="c2" type="checkbox" value="1815303605" name="block"> 大安區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c3">
+          <input class="zoom" id="c3" type="checkbox" value="1506220121" name="block"> 中山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c4">
+          <input class="zoom" id="c4" type="checkbox" value="1261815181" name="block"> 松山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c5">
+          <input class="zoom" id="c5" type="checkbox" value="1345673982" name="block"> 中正區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c6">
+          <input class="zoom" id="c6" type="checkbox" value="1345673982" name="block"> 文山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c7">
+          <input class="zoom" id="c7" type="checkbox" value="643981330" name="block"> 三重區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c8">
+          <input class="zoom" id="c8" type="checkbox" value="643981330" name="block"> 板橋區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c9">
+          <input class="zoom" id="c9" type="checkbox" value="751405492" name="block"> 大同區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c10">
+          <input class="zoom" id="c10" type="checkbox" value="751405492" name="block"> 萬華區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c11">
+          <input class="zoom" id="c11" type="checkbox" value="1187932245" name="block"> 新店區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c12">
+          <input class="zoom" id="c12" type="checkbox" value="1187932245" name="block"> 中和區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c13">
+          <input class="zoom" id="c13" type="checkbox" value="1187932245" name="block"> 永和區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c14">
+          <input class="zoom" id="c14" type="checkbox" value="958354181" name="block"> 士林區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c15">
+          <input class="zoom" id="c15" type="checkbox" value="958354181" name="block"> 南港區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c16">
+          <input class="zoom" id="c16" type="checkbox" value="958354181" name="block"> 內湖區
+        </label>
+      </div>
     </div>
     <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
       <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">

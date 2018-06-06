@@ -141,25 +141,28 @@
           if (blocks != "") {
             Dataurl += "+H+Like+%27%25" + escape(blocks) + "%25%27+and+";
           }
-          if (rentLow != "") {
-            Dataurl += "+J%3E%3D" + rentLow;
-            if (rent == "") {
-              Dataurl += "+order+by+J+asc+";
-            }
-            else {
-              Dataurl += "+and+";
-            }
-          }
+          // if (rentLow != "") {
+          //   Dataurl += "+J%3E%3D" + rentLow;
+          //   if (rent == "") {
+          //     Dataurl += "+order+by+J+asc+";
+          //   }
+          //   else {
+          //     Dataurl += "+and+";
+          //   }
+          // }
           if (rent != "") {
             Dataurl += "+J%3C%3D" + rent;
-            if (rentLow != "") {
-              Dataurl += "+order+by+J+asc+";
-            }
-            else {
+            // if (rentLow != "") {
+            //   Dataurl += "+order+by+J+asc+";
+            // }
+            // else {
               Dataurl += "+order+by+J+desc+";
-            }
+            // }
           }
-          else if (rentLow == "") {
+          // else if (rentLow == "") {
+          //   Dataurl += "+1%3D1+";
+          // }
+          else {
             Dataurl += "+1%3D1+";
           }
           Dataurl += "&key=" + sheetID + "&gid=" + gid;

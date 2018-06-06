@@ -29,6 +29,7 @@
     $(function () {
       let SortNum = 1;
       $("#Submit").on('click', function () {
+         $("#selectBlock").trigger("click");
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
         $("#show").html("");
@@ -378,20 +379,20 @@
         }, 1000);
       });
       $("#FiveTen").click(function () {
-        $("#rentLow").val(5000);
+        // $("#rentLow").val(5000);
         $("#rent").val(10000);
       });
       $("#TenFifteen").click(function () {
-        $("#rentLow").val(10000);
+        // $("#rentLow").val(10000);
         $("#rent").val(150000);
       });
       $("#FifteenTwenty").click(function () {
-        $("#rentLow").val(15000);
+        // $("#rentLow").val(15000);
         $("#rent").val(20000);
       });
       $("#TwentyUP").click(function () {
-        $("#rentLow").val(20000);
-        $("#rent").val("");
+        // $("#rentLow").val(20000);
+        $("#rent").val(25000);
       });
       $("#selectBlock").click(function () {
         if ($("#collapseBlock").is(":visible")) {
@@ -624,15 +625,21 @@
       </h3>
     </div>
     <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-0" style="display:inline-flex;margin-top:18px">
-      <input type="text" style="width:35%;" name="rentLow" id="rentLow" placeholder="最低" class="form-control" />~
-      <input type="text" style="width:35%;" name="rent" id="rent" placeholder="最高" class="form-control" />元
+      <!-- <input type="text" style="width:35%;" name="rentLow" id="rentLow" placeholder="最低" class="form-control" />~ -->
+      <input type="text" style="width:70%;" name="rent" id="rent" placeholder="最高預算" class="form-control" />元
     </div>
     <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-1" style="margin-top:18px">
-      <button id="FiveTen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">5K~10K</button>
-      <button id="TenFifteen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">10K~15K</button>
-      <button id="FifteenTwenty" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">15K~20K</button>
-      <button id="TwentyUP" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">20K
-        <i class="fas fa-level-up-alt"></i>
+      <button id="FiveTen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">10K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="TenFifteen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">15K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="FifteenTwenty" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">20K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="TwentyUP" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">25K
+        <i class="fas fa-level-down-alt"></i>
       </button>
     </div>
 

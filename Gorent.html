@@ -29,7 +29,7 @@
     $(function () {
       let SortNum = 1;
       $("#Submit").on('click', function () {
-         $("#selectBlock").trigger("click");
+        $("#selectBlock").trigger("click");
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
         $("#show").html("");
@@ -119,7 +119,7 @@
 
 
         let sheetID = "1QhRpcYEix-oyShiGgP4JwV4nBK-VXT92lk_jP9CtUTg"; // 試算表代號
-        let sql = "select+A%2CB%2CH%2CF%2CC%2CD%2CE%2CI%2CJ%2CG%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
+        let sql = "select+A%2CB%2CH%2CF%2CC%2CD%2CE%2CI%2CG%2CJ%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
         let rent = $.trim($("#rent").val());
         let rentLow = $.trim($("#rentLow").val());
         let codename = $.trim($("#codename").val());
@@ -176,6 +176,7 @@
             let html = [];
             let i;
             let j;
+            let gg;
             let dataGroup;
             let dataLength;
             //let bloclName;
@@ -187,7 +188,7 @@
               dataLength = dataGroup.length;
               html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
-                if (!dataGroup[j]) {
+                if (!dataGroup[j] && j != 16) {
                   continue;
                 }
                 switch (j) {
@@ -217,11 +218,11 @@
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 8:
-                    html.push("<td class=\"rent\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
-                    //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
+                    html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 9:
-                    html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
                     html.push("<td data-th=\"含\"  class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
@@ -242,7 +243,12 @@
                     html.push("<td data-th=\"電\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     break;
                   case 16:
-                    html.push("<td data-th=\"管理費\" class=\"halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[16]) {
+                      html.push("<td data-th=\"管理費\" class=\"halfem\"> " + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"管理費\" class=\"halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 17:
                     html.push("<td data-th=\"開伙\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
@@ -260,7 +266,7 @@
                     html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                 }
-                html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
+                // html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
               }
               html.push("</tr>");
             }
@@ -581,7 +587,7 @@
         font-size: 38px;
       }
       .bigger {
-        font-size: 45px;
+        font-size: 52px;
         font-weight: bold;
       }
       .bigger-name {

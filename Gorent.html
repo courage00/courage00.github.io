@@ -156,7 +156,7 @@
             //   Dataurl += "+order+by+J+asc+";
             // }
             // else {
-              Dataurl += "+order+by+J+desc+";
+            Dataurl += "+order+by+J+desc+";
             // }
           }
           // else if (rentLow == "") {
@@ -191,7 +191,7 @@
               dataLength = dataGroup.length;
               html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
-                if (!dataGroup[j] && j != 16) {
+                if (!dataGroup[j] && (j == 0 || j == 2 || j == 3 || j == 4 || j == 5 || j == 6 || j == 7)) {
                   continue;
                 }
                 switch (j) {
@@ -199,7 +199,12 @@
                     html.push("<td data-th=\"物件狀態\" ><font class=\"bigger\" >" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 1:
-                    html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    if (!dataGroup[1]) {
+                      html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + "" + "</font></td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    }
                     break;
                   case 2:
                     html.push("<td  class=\"area bigger-width\" data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
@@ -221,29 +226,71 @@
                     html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 8:
-                    html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    if (!dataGroup[8]) {
+                      html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + + "\">" + + "</a></td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    }
                     break;
                   case 9:
-                    html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    if (!dataGroup[9]) {
+                      html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + + "</font></td>");
+                    }
+                    else {
+                      html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    }
                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
-                    html.push("<td data-th=\"含\"  class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[10]) {
+                      html.push("<td data-th=\"含\"  class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"含\"  class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 11:
-                    html.push("<td data-th=\"格局\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[11]) {
+                      html.push("<td data-th=\"格局\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"格局\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+
                     break;
                   case 12:
-                    html.push("<td data-th=\"坪數\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    if (!dataGroup[12]) {
+                      html.push("<td data-th=\"坪數\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"坪數\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    }
+
                     break;
                   case 13:
-                    html.push("<td data-th=\"型態\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[13]) {
+                      html.push("<td data-th=\"型態\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"型態\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 14:
-                    html.push("<td data-th=\"現況\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[14]) {
+                      html.push("<td data-th=\"現況\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"現況\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 15:
-                    html.push("<td data-th=\"電\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[15]) {
+                      html.push("<td data-th=\"電\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"電\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 16:
                     if (!dataGroup[16]) {
@@ -254,19 +301,45 @@
                     }
                     break;
                   case 17:
-                    html.push("<td data-th=\"開伙\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[17]) {
+                      html.push("<td data-th=\"開伙\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"開伙\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 18:
-                    html.push("<td data-th=\"寵物\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[18]) {
+                      html.push("<td data-th=\"寵物\" class=\"halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"寵物\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 19:
-                    html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    if (!dataGroup[19]) {
+                      html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
                     break;
                   case 20:
-                    html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    if (!dataGroup[20]) {
+                      html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                    }
+                    else {
+                      html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                    }
+                    // html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   target=\"_blank\" class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
-                    html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    if (!dataGroup[21]) {
+                      html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + + "\">連結</a></td>");
+                    }
+                    else {
+                      html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    }
                     break;
                 }
                 // html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
@@ -590,20 +663,25 @@
         font-size: 38px;
       }
       .bigger {
-        font-size: 52px;
+        font-size: 55px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.751);
+      }
+      .bigger2 {
+        font-size: 55px;
         font-weight: bold;
       }
       .bigger-name {
         width: 6em;
       }
       .bigger-width {
-        width: 4.75em;
+        width: 5em;
       }
       .projecct-name {
         width: 20em;
       }
       .halfem {
-        width: 9.5em;
+        width: 10em;
       }
       .halfem-5 {
         width: 5em;
@@ -754,7 +832,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12 col-sm-12">
+      <div class="col-md-12 col-sm-12" style="width:110%;">
         <div id="load" style="display:block; margin:auto;text-align: center; display:none;">Loading...</br>
           <img style="display:block; margin:auto;" src="images/UyfU4KX.gif" />
         </div>

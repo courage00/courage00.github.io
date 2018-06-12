@@ -214,131 +214,131 @@
                     html.push("<td data-th=\"姓名\"><font class=\"bigger\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     break;
                   case 4:
-                    html.push("<td data-th=\"收件日期\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"收件日期\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 5:
-                    html.push("<td data-th=\"服務費\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"服務費\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 6:
-                    html.push("<td data-th=\"對話要點\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    html.push("<td data-th=\"對話要點\" class=\"rwdtd\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     break;
                   case 7:
-                    html.push("<td data-th=\"地址\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    html.push("<td data-th=\"地址\" class=\"rwdtd\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     break;
                   case 8:
                     if (!dataGroup[8]) {
-                      html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + + "\">" + + "</a></td>");
+                      html.push("<td data-th=\"電話\"  class=\"rwdtd halfem-20\" ><a href =\"tel:" + + "\">" + + "</a></td>");
                     }
                     else {
-                      html.push("<td data-th=\"電話\"  class=\"halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                      html.push("<td data-th=\"電話\"  class=\"rwdtd halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
                     }
                     break;
                   case 9:
                     if (!dataGroup[9]) {
-                      html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + + "</font></td>");
+                      html.push("<td class=\"rwdtd rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + + "</font></td>");
                     }
                     else {
-                      html.push("<td class=\"rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                      html.push("<td class=\"rwdtd rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     }
                     //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
                     break;
                   case 10:
                     if (!dataGroup[10]) {
-                      html.push("<td data-th=\"含\"  class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"含\"  class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"含\"  class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"含\"  class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 11:
                     if (!dataGroup[11]) {
-                      html.push("<td data-th=\"格局\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"格局\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"格局\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"格局\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
 
                     break;
                   case 12:
                     if (!dataGroup[12]) {
-                      html.push("<td data-th=\"坪數\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"坪數\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"坪數\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                      html.push("<td data-th=\"坪數\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
                     }
 
                     break;
                   case 13:
                     if (!dataGroup[13]) {
-                      html.push("<td data-th=\"型態\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"型態\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"型態\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"型態\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 14:
                     if (!dataGroup[14]) {
-                      html.push("<td data-th=\"現況\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"現況\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"現況\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"現況\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 15:
                     if (!dataGroup[15]) {
-                      html.push("<td data-th=\"電\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"電\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"電\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"電\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 16:
                     if (!dataGroup[16]) {
-                      html.push("<td data-th=\"管理費\" class=\"halfem\"> " + + "</td>");
+                      html.push("<td data-th=\"管理費\" class=\"rwdtd halfem\"> " + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"管理費\" class=\"halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"管理費\" class=\"rwdtd halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 17:
                     if (!dataGroup[17]) {
-                      html.push("<td data-th=\"開伙\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"開伙\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"開伙\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"開伙\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 18:
                     if (!dataGroup[18]) {
-                      html.push("<td data-th=\"寵物\" class=\"halfem\" >" + + "</td>");
+                      html.push("<td data-th=\"寵物\" class=\"rwdtd halfem\" >" + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"寵物\" class=\"halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"寵物\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 19:
                     if (!dataGroup[19]) {
-                      html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + + "</td>");
+                      html.push("<td data-th=\"案名\" class=\"rwdtd projecct-name\"> " + + "</td>");
                     }
                     else {
-                      html.push("<td data-th=\"案名\" class=\"projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                      html.push("<td data-th=\"案名\" class=\"rwdtd projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
                     }
                     break;
                   case 20:
                     if (!dataGroup[20]) {
-                      html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                      html.push("<td  data-th=\"原網址\" class=\"rwdtd halfem\" ><a   class=\"bigger2\">連結</a></td>");
                     }
                     else {
-                      html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                      html.push("<td  data-th=\"原網址\" class=\"rwdtd halfem\" ><a   class=\"bigger2\">連結</a></td>");
                     }
                     // html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   target=\"_blank\" class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     break;
                   case 21:
                     if (!dataGroup[21]) {
-                      html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + + "\">連結</a></td>");
+                      html.push("<td  data-th=\"樂屋網\" class=\"rwdtd halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + + "\">連結</a></td>");
                     }
                     else {
-                      html.push("<td  data-th=\"樂屋網\" class=\"halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                      html.push("<td  data-th=\"樂屋網\" class=\"rwdtd halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
                     }
                     break;
                 }
@@ -584,7 +584,7 @@
       display: block;
     }
 
-    .rwd-table td:before {
+    .rwd-table .rwdtd:before {
       content: attr(data-th) " : ";
       font-weight: bold;
       width: 6.5em;

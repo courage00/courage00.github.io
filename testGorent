@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script type="Text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/flexslider.css">
+  <script>
+    // 寫這段code的時候，只有上帝和我知道它是幹嘛的 
+    // 現在只有上帝知道  by2018
+    console.log("ʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
+    console.log("ʕ•͡ᴥ•ʔ");
+
+    $(function () {
+      let SortNum = 1;
+      $("#Submit").on('click', function () {
+        $("#selectBlock").trigger("click");
+        $("#Submit").prop("disabled", true);
+        $("#Sort").prop("disabled", true);
+        $("#show").html("");
+        $('#anchor').html("");
+        $('#anchor').hide();
+        RemoveChartData();
+        let CheckBoxList = [];//存部分同意
+        let BlockList = [];//存單表單多重區域
+        let AsyncCount = 0;
+        for (let i = 1; i <= 16; i++) {  //存多選
+          if ($("#c" + i).prop('checked') == true) {
+            switch (i) {
+              case 1:
+                CheckBoxList.push(1700530628);//信義
+                BlockList.push("信義區");
+                break;
+              case 2:
+                CheckBoxList.push(1815303605);//大安
+                BlockList.push("大安區");
+                break;
+              case 3:
+                CheckBoxList.push(1506220121);//中山
+                BlockList.push("中山區");
+                break;
+              case 4:
+                CheckBoxList.push(1261815181);//松山
+                BlockList.push("松山區");
+                break;
+              case 5:
+                CheckBoxList.push(1345673982);//中正
+                BlockList.push("中正區");
+                break;
+              case 6:
+                CheckBoxList.push(1345673982);//文山
+                BlockList.push("文山區");
+                break;
+              case 7:
+                CheckBoxList.push(643981330);//三重
+                BlockList.push("三重區");
+                break;
+              case 8:
+                CheckBoxList.push(643981330);//板橋
+                BlockList.push("板橋區");
+                break;
+              case 9:
+                CheckBoxList.push(751405492);//大同
+                BlockList.push("大同區");
+                break;
+              case 10:
+                CheckBoxList.push(751405492);//萬華
+                BlockList.push("萬華區");
+                break;
+              case 11:
+                CheckBoxList.push(1187932245);//新店
+                BlockList.push("新店區");
+                break;
+              case 12:
+                CheckBoxList.push(1187932245);//中和
+                BlockList.push("中和區");
+                break;
+              case 13:
+                CheckBoxList.push(1187932245);//永和
+                BlockList.push("永和區");
+                break;
+              case 14:
+                CheckBoxList.push(958354181);//士林
+                BlockList.push("士林區");
+                break;
+              case 15:
+                CheckBoxList.push(958354181);//南港
+                BlockList.push("南港區");
+                break;
+              case 16:
+                CheckBoxList.push(958354181);//內湖
+                BlockList.push("內湖區");
+                break;
+            }
+          }
+        }
+        // console.log(CheckBoxList.length);
+        if (CheckBoxList.length == 0) {
+          CheckBoxList = [1700530628, 1815303605, 1506220121, 1261815181, 1345673982, 1345673982, 643981330, 643981330, 751405492,
+            751405492, 1187932245, 1187932245, 1187932245, 958354181, 958354181, 958354181];
+          BlockList = ["信義區", "大安區", "中山區", "松山區", "中正區", "文山區", "三重區", "板橋區", "大同區", "萬華區",
+            "新店區", "中和區", "永和區", "士林區", "南港區", "內湖區"];
+        }
+
+
+
+        let sheetID = "1QhRpcYEix-oyShiGgP4JwV4nBK-VXT92lk_jP9CtUTg"; // 試算表代號
+        let sql = "select+A%2CB%2CH%2CF%2CC%2CD%2CE%2CI%2CG%2CJ%2CK%2CL%2CM%2CN%2CO%2CP%2CQ%2CR%2CS%2CT%2CV%2CW+where"; // SQL 語法
+        let rent = $.trim($("#rent").val());
+        let rentLow = $.trim($("#rentLow").val());
+        let codename = $.trim($("#codename").val());
+        //let address = $.trim($("#address").val());
+        let callback = "callback"; // 回呼函數名稱
+        let blockcount = 1;//區塊命名
+        //let rentList=[];
+
+        for (let x = 0; x < CheckBoxList.length; x++) {
+          $("#load").show();
+          let gid = CheckBoxList[x]; // 工作表代號
+          let blocks = BlockList[x]; //查詢區域
+          let anchorhr = new Array(9);
+          anchorhr[x] = gid;
+          let Dataurl = "https://spreadsheets.google.com/tq?tqx=responseHandler:" + callback + "&tq=" + sql;
+          if (codename != "") {
+            Dataurl += "+%28B+Like+%27%25" + escape(codename) + "%25%27+or+" + "+I+Like+%27%25" + escape(codename) + "%25%27%29+and+";
+          }
+          if (blocks != "") {
+            Dataurl += "+H+Like+%27%25" + escape(blocks) + "%25%27+and+";
+          }
+          // if (rentLow != "") {
+          //   Dataurl += "+J%3E%3D" + rentLow;
+          //   if (rent == "") {
+          //     Dataurl += "+order+by+J+asc+";
+          //   }
+          //   else {
+          //     Dataurl += "+and+";
+          //   }
+          // }
+          if (rent != "") {
+            Dataurl += "+J%3C%3D" + rent;
+            // if (rentLow != "") {
+            //   Dataurl += "+order+by+J+asc+";
+            // }
+            // else {
+            Dataurl += "+order+by+J+desc+";
+            // }
+          }
+          // else if (rentLow == "") {
+          //   Dataurl += "+1%3D1+";
+          // }
+          else {
+            Dataurl += "+1%3D1+";
+          }
+          Dataurl += "&key=" + sheetID + "&gid=" + gid;
+          //console.log(Dataurl);
+          // console.log(gid);
+          $.getScript(Dataurl);
+          // $("#show").append("<hr id=\"anchor" + gid + "\">");
+          if (1 != 1) {
+
+          }
+          window[callback] = async function (json) {
+            let rowArray = json.table.rows;
+            let rowLength = rowArray.length;
+            let html = [];
+            let i;
+            let j;
+            let gg;
+            let dataGroup;
+            let dataLength;
+            let chartDataCount=0;
+            let charLabelName;
+            //let bloclName;
+            for (i = 0; i < rowLength; i++) {
+              dataGroup = rowArray[i].c;
+              if (dataGroup[0] != null) {
+                continue;
+              }
+              chartDataCount++;
+              dataLength = dataGroup.length;
+              html.push("<tr>");
+              for (j = 0; j < dataLength; j++) {
+                if (!dataGroup[j] && (j == 0 || j == 2 || j == 3 || j == 4 || j == 5 || j == 6 || j == 7)) {
+                  continue;
+                }
+                switch (j) {
+                  case 0:
+                    html.push("<td data-th=\"物件狀態\" ><font class=\"bigger\" >" + (null || dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    break;
+                  case 1:
+                    if (!dataGroup[1]) {
+                      html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + "" + "</font></td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"編號\" class=\"bigger-width\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    }
+                    break;
+                  case 2:
+                    html.push("<td  class=\"area bigger-width\" data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    //bloclName= (dataGroup[j].f || dataGroup[j].v || "") +"";
+                    charLabelName= (dataGroup[j].f || dataGroup[j].v || "");
+                    break;
+                  case 3:
+                    html.push("<td data-th=\"姓名\"><font class=\"bigger\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    break;
+                  case 4:
+                    html.push("<td data-th=\"收件日期\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 5:
+                    html.push("<td data-th=\"服務費\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 6:
+                    html.push("<td data-th=\"對話要點\" class=\"rwdtd\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    break;
+                  case 7:
+                    html.push("<td data-th=\"地址\" class=\"rwdtd\"><a href =\"http://maps.google.com.tw/maps?q=" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    break;
+                  case 8:
+                    if (!dataGroup[8]) {
+                      html.push("<td data-th=\"電話\"  class=\"rwdtd halfem-20\" ><a href =\"tel:" + + "\">" + + "</a></td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"電話\"  class=\"rwdtd halfem-20\" ><a href =\"tel:" + (dataGroup[j].f || dataGroup[j].v || "") + "\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</a></td>");
+                    }
+                    break;
+                  case 9:
+                    if (!dataGroup[9]) {
+                      html.push("<td class=\"rwdtd rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + + "</font></td>");
+                    }
+                    else {
+                      html.push("<td class=\"rwdtd rent halfem\" data-th=\"租金\"><font class=\"bigger halfem-5\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
+                    }
+                    //rentList.push((dataGroup[j].f || dataGroup[j].v || ""));
+                    break;
+                  case 10:
+                    if (!dataGroup[10]) {
+                      html.push("<td data-th=\"含\"  class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"含\"  class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 11:
+                    if (!dataGroup[11]) {
+                      html.push("<td data-th=\"格局\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"格局\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+
+                    break;
+                  case 12:
+                    if (!dataGroup[12]) {
+                      html.push("<td data-th=\"坪數\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"坪數\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</td>");
+                    }
+
+                    break;
+                  case 13:
+                    if (!dataGroup[13]) {
+                      html.push("<td data-th=\"型態\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"型態\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 14:
+                    if (!dataGroup[14]) {
+                      html.push("<td data-th=\"現況\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"現況\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 15:
+                    if (!dataGroup[15]) {
+                      html.push("<td data-th=\"電\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"電\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 16:
+                    if (!dataGroup[16]) {
+                      html.push("<td data-th=\"管理費\" class=\"rwdtd halfem\"> " + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"管理費\" class=\"rwdtd halfem\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 17:
+                    if (!dataGroup[17]) {
+                      html.push("<td data-th=\"開伙\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"開伙\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 18:
+                    if (!dataGroup[18]) {
+                      html.push("<td data-th=\"寵物\" class=\"rwdtd halfem\" >" + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"寵物\" class=\"rwdtd halfem\" >" + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 19:
+                    if (!dataGroup[19]) {
+                      html.push("<td data-th=\"案名\" class=\"rwdtd projecct-name\"> " + + "</td>");
+                    }
+                    else {
+                      html.push("<td data-th=\"案名\" class=\"rwdtd projecct-name\"> " + (dataGroup[j].f || dataGroup[j].v) + "</td>");
+                    }
+                    break;
+                  case 20:
+                    if (!dataGroup[20]) {
+                      html.push("<td  data-th=\"原網址\" class=\"rwdtd halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                    }
+                    else {
+                      html.push("<td  data-th=\"原網址\" class=\"rwdtd halfem\" ><a   class=\"bigger2\">連結</a></td>");
+                    }
+                    // html.push("<td  data-th=\"原網址\" class=\"halfem\" ><a   target=\"_blank\" class=\"bigger\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    break;
+                  case 21:
+                    if (!dataGroup[21]) {
+                      html.push("<td  data-th=\"樂屋網\" class=\"rwdtd halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + + "\">連結</a></td>");
+                    }
+                    else {
+                      html.push("<td  data-th=\"樂屋網\" class=\"rwdtd halfem\" ><a target=\"_blank\" class=\"bigger2\" href=\"" + (dataGroup[j].f || dataGroup[j].v || "") + "\">連結</a></td>");
+                    }
+                    break;
+                }
+                // html.push((dataGroup[j].f || dataGroup[j].v || "") + " ");
+              }
+              html.push("</tr>");
+            }
+            $("#show").append("<hr id=\"anchor_" + blockcount + "\" >");
+            $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
+            AddChartData(charLabelName, chartDataCount);
+            $("#show").append(html.join(''));
+            AsyncCount += await SetAnchorTag(blockcount);
+            if (AsyncCount == CheckBoxList.length) {
+              $('#anchor').show();
+              $('#load').hide();
+              $("#Submit").prop("disabled", false);
+              $("#Sort").prop("disabled", false);
+            };
+            // $("#Submit").prop("disabled", false);
+            // $("#Sort").prop("disabled", false);
+            blockcount++;
+          };
+
+        }
+      });
+      function SetAnchorTag(blockcount) {
+        let settag = $("#anchor_" + blockcount + "").next().children(".area").text();
+        if (settag == "信義區") {
+          $("#tag_" + blockcount).append("信義");
+        }
+        else if (settag == "大安區") {
+          $("#tag_" + blockcount).append("大安");
+        }
+        else if (settag == "中山區") {
+          $("#tag_" + blockcount).append("中山");
+        }
+        else if (settag == "松山區") {
+          $("#tag_" + blockcount).append("松山");
+        }
+        else if (settag == "中正區") {
+          $("#tag_" + blockcount).append("中正");
+        }
+        else if (settag == "文山區") {
+          $("#tag_" + blockcount).append("文山");
+        }
+        else if (settag == "三重區") {
+          $("#tag_" + blockcount).append("三重");
+        }
+        else if (settag == "板橋區") {
+          $("#tag_" + blockcount).append("板橋");
+        }
+        else if (settag == "大同區") {
+          $("#tag_" + blockcount).append("大同");
+        }
+        else if (settag == "萬華區") {
+          $("#tag_" + blockcount).append("萬華");
+        }
+        else if (settag == "新店區") {
+          $("#tag_" + blockcount).append("新店");
+        }
+        else if (settag == "永和區") {
+          $("#tag_" + blockcount).append("永和");
+        }
+        else if (settag == "中和區") {
+          $("#tag_" + blockcount).append("中和");
+        }
+        else if (settag == "士林區") {
+          $("#tag_" + blockcount).append("士林");
+        }
+        else if (settag == "南港區") {
+          $("#tag_" + blockcount).append("南港");
+        }
+        else if (settag == "內湖區") {
+          $("#tag_" + blockcount).append("內湖");
+        }
+        else {
+          $("#tag_" + blockcount).remove();    //移除沒資料的區域tag
+          $("#anchor_" + blockcount).remove(); //刪分隔線        
+        }
+        return 1;
+      };
+      $("#Sort").on('click', async function testSort() {
+        $("#Sort").prop("disabled", true);
+        $('#load').show();
+        if (SortNum % 2 != 0) {
+          $("#SortIcon").removeClass("fa-sort-numeric-down").addClass("fa-sort-numeric-up");
+          if (await reSort()) {
+            $('#load').hide();
+            $("#Sort").prop("disabled", false);
+            SortNum++
+          }
+        }
+        else if (SortNum % 2 == 0) {
+          $("#SortIcon").removeClass("fa-sort-numeric-up").addClass("fa-sort-numeric-down");
+          if (await reSort2()) {
+            $('#load').hide();
+            $("#Sort").prop("disabled", false);
+            SortNum++
+          }
+        }
+      });
+      function reSort() {
+        let rows = $("#show").find('tr').toArray().sort(comparer);
+        $("#anchor").empty();
+        $("#show").empty().html(rows);
+        return true;
+      };
+      function reSort2() {
+        let rows = $("#show").find('tr').toArray().sort(comparer2);
+        $("#anchor").empty();
+        $("#show").empty().html(rows);
+        return true;
+      };
+      // function dogDanceHide(){
+      //   $('#load').hide();
+      // };
+      $("#gotop").click(function () {
+        jQuery("html,body").animate({
+          scrollTop: 0
+        }, 1000);
+      });
+      $("#FiveTen").click(function () {
+        // $("#rentLow").val(5000);
+        $("#rent").val(10000);
+      });
+      $("#TenFifteen").click(function () {
+        // $("#rentLow").val(10000);
+        $("#rent").val(15000);
+      });
+      $("#FifteenTwenty").click(function () {
+        // $("#rentLow").val(15000);
+        $("#rent").val(20000);
+      });
+      $("#TwentyUP").click(function () {
+        // $("#rentLow").val(20000);
+        $("#rent").val(25000);
+      });
+      $("#selectBlock").click(function () {
+        if ($("#collapseBlock").is(":visible")) {
+          $("#collapseBlock").hide();
+          $("#BlockIcon").removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
+        }
+        else {
+          $("#collapseBlock").show();
+          $("#BlockIcon").removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
+        }
+      });
+      function comparer(a, b) {
+        var valA = getCellValue(a),
+          valB = getCellValue(b);
+        return $.isNumeric(valA) && $.isNumeric(valB) ? valB - valA : valB.localeCompare(valA);
+      };
+      function comparer2(c, d) {
+        var valC = getCellValue(c),
+          valD = getCellValue(d);
+        return $.isNumeric(valC) && $.isNumeric(valD) ? valC - valD : valC.localeCompare(valD);
+      };
+      function getCellValue(row) {
+        return $(row).find('.rent').text().replace(/,/, "");
+      };
+
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+          $('#gotop').fadeIn("fast");
+        } else {
+          $('#gotop').stop().fadeOut("fast");
+        }
+      });
+
+      var color = Chart.helpers.color;
+      var barChartData = {
+        labels: [''],
+        datasets: []
+      };
+      var ctx = document.getElementById('myChart').getContext('2d');
+      window.myBar = new Chart(ctx, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+            label:{
+              fontSize:40
+            }
+          },
+          title: {
+            display: false,
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: 30
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 30
+              }
+            }]
+          }
+        }
+      });
+      function AddChartData(labelName, chartData) {
+        let coolrR = Math.floor(Math.random() * 256);
+        let coolrG = Math.floor(Math.random() * 256);
+        let coolrB = Math.floor(Math.random() * 256);
+        let newDataset = {
+          label: labelName,
+          backgroundColor: 'rgba(' + coolrR + ', ' + coolrG + ', ' + coolrB + ', 0.548)',
+          borderColor: 'rgba(' + coolrR + ', ' + coolrG + ', ' + coolrB + ', 0.548)',
+          borderWidth: 1,
+          data: [chartData]
+        };
+
+        barChartData.datasets.push(newDataset);
+        window.myBar.update();
+      }
+
+      function RemoveChartData() {
+        barChartData.datasets.length = 0;
+        window.myBar.update();
+      };
+      $("#ShowChart").click(function () {
+        if ($("#myChart").is(":visible")) {
+          $("#myChart").hide();
+        }
+        else {
+          $("#myChart").show();
+        }
+      });
+
+
+
+
+    });
+  </script>
+
+  <style type="text/css">
+    body {
+      line-height: 1.7;
+      font-size: 24px;
+    }
+    hr {
+      border-top:1px solid #3d3d3d;
+    }
+    .anchor {
+      font-size: 24px;
+    }
+
+    .zoom {
+      zoom: 1.3;
+    }
+
+    table {
+      font-size: 20px;
+    }
+
+    .btn {
+      border-radius: 40px;
+      font-size: 15px;
+    }
+
+    .form-control {
+      padding: 12px 12px;
+    }
+
+    #gotop {
+      position: fixed;
+      border-radius: 50px;
+      right: 50px;
+      bottom: 25%;
+      padding: 12px 18px;
+      font-size: 35px;
+      background: rgba(0, 62, 177, 0.548);
+      color: #FAFCFD;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .select {
+      font-size: 20px;
+    }
+
+    a {
+      font-weight: bold;
+    }
+
+    .rwd-table {
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .rwd-table tr:nth-of-type(2n) {
+      background: #eee;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      margin: 0.5px;
+    }
+
+    .rwd-table {
+      min-width: 100%;
+    }
+
+    .rwd-table th {
+      display: none;
+    }
+
+    .rwd-table td {
+      display: block;
+    }
+
+    .rwd-table .rwdtd:before {
+      content: attr(data-th) " : ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+
+    .rwd-table th,
+    .rwd-table td {
+      text-align: left;
+    }
+
+    .rwd-table th,
+    .rwd-table td:before {
+      color: #D20B2A;
+      font-weight: bold;
+    }
+
+    @media (min-width: 3000px) {
+      .rwd-table td:before {
+        display: none;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        display: table-cell;
+        padding: 0.25em 0.5em;
+      }
+      .rwd-table th:first-child,
+      .rwd-table td:first-child {
+        padding-left: 0;
+      }
+      .rwd-table th:last-child,
+      .rwd-table td:last-child {
+        padding-right: 0;
+      }
+      .rwd-table th,
+      .rwd-table td {
+        padding: 1em !important;
+      }
+    }
+
+    @media screen and (max-width:1000px) {
+      .rwd-table td {
+        display: inline-grid;
+      }
+      h1 {
+        font-size: 80px;
+        line-height: 120px!important;
+        height: 120px!important;
+      }
+      h3 {
+        font-size: 64px;
+      }
+      .form-control {
+        height: 64px;
+        font-size: 50px;
+      }
+      .select {
+        font-size: 35px;
+      }
+      body {
+        font-size: 50px;
+      }
+      .zoom {
+        zoom: 3;
+      }
+      .btn {
+        font-size: 55px;
+      }
+      #gotop {
+        font-size: 64px;
+      }
+      .anchor {
+        font-size: 55px;
+      }
+      table {
+        font-size: 38px;
+      }
+      .bigger {
+        font-size: 55px;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.751);
+      }
+      .bigger2 {
+        font-size: 55px;
+        font-weight: bold;
+      }
+      .bigger-name {
+        width: 6em;
+      }
+      .bigger-width {
+        width: 5em;
+      }
+      .projecct-name {
+        width: 20em;
+      }
+      .halfem {
+        width: 10em;
+      }
+      .halfem-5 {
+        width: 5em;
+      }
+      .halfem-20 {
+        width: 20em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div style="color: rgba(0, 0, 0, 0.87); background-color: rgba(0, 62, 177, 0.548); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 0px; position: relative; width: 110%; display: flex; padding-left: 24px; padding-right: 24px;">
+    <h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 110%;">
+      <i class="fas fa-chess-rook"></i>GORENT 物件查詢</h1>
+  </div>
+  <div id="gotop">˄</div>
+  <div class="row">
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-11 col-md-offset-1">
+      <h3 class="post-title">
+        案件編號或地址:
+      </h3>
+      <input type="text" style="width:75%;" name="codename" id="codename" placeholder="案件編號或地址" class="form-control" />
+    </div>
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-1 col-md-offset-1">
+      <h3 class="post-title">
+        租金:
+      </h3>
+    </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-0" style="display:inline-flex;margin-top:18px">
+      <!-- <input type="text" style="width:35%;" name="rentLow" id="rentLow" placeholder="最低" class="form-control" />~ -->
+      <input type="text" style="width:70%;" name="rent" id="rent" placeholder="最高預算" class="form-control" />元
+    </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-12 col-sm-offset-1 col-md-6 col-md-offset-1" style="margin-top:18px">
+      <button id="FiveTen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">10K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="TenFifteen" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">15K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="FifteenTwenty" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">20K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+      <button id="TwentyUP" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">25K
+        <i class="fas fa-level-down-alt"></i>
+      </button>
+    </div>
+
+
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <h3 class="post-title" id="selectBlock">
+        選擇要查詢的地區
+        <i id="BlockIcon" class="fas fa-angle-double-up"></i>
+      </h3>
+
+    </div>
+    <div class="row" id="collapseBlock">
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c1">
+          <input class="zoom" id="c1" type="checkbox" value="1700530628" name="block"> 信義區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c2">
+          <input class="zoom" id="c2" type="checkbox" value="1815303605" name="block"> 大安區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c3">
+          <input class="zoom" id="c3" type="checkbox" value="1506220121" name="block"> 中山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c4">
+          <input class="zoom" id="c4" type="checkbox" value="1261815181" name="block"> 松山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c5">
+          <input class="zoom" id="c5" type="checkbox" value="1345673982" name="block"> 中正區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c6">
+          <input class="zoom" id="c6" type="checkbox" value="1345673982" name="block"> 文山區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c7">
+          <input class="zoom" id="c7" type="checkbox" value="643981330" name="block"> 三重區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c8">
+          <input class="zoom" id="c8" type="checkbox" value="643981330" name="block"> 板橋區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c9">
+          <input class="zoom" id="c9" type="checkbox" value="751405492" name="block"> 大同區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c10">
+          <input class="zoom" id="c10" type="checkbox" value="751405492" name="block"> 萬華區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c11">
+          <input class="zoom" id="c11" type="checkbox" value="1187932245" name="block"> 新店區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c12">
+          <input class="zoom" id="c12" type="checkbox" value="1187932245" name="block"> 中和區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c13">
+          <input class="zoom" id="c13" type="checkbox" value="1187932245" name="block"> 永和區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c14">
+          <input class="zoom" id="c14" type="checkbox" value="958354181" name="block"> 士林區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c15">
+          <input class="zoom" id="c15" type="checkbox" value="958354181" name="block"> 南港區
+        </label>
+      </div>
+      <div class="col-xs-3  col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-1">
+        <label for="c16">
+          <input class="zoom" id="c16" type="checkbox" value="958354181" name="block"> 內湖區
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12  col-sm-12 col-sm-offset-1 col-md-12 col-md-offset-1">
+      <button id="Submit" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
+        <i class="fab fa-sistrix"></i>Get</button>
+      <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
+        <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序全部</button>
+              <button id="ShowChart" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
+                <i id="ChartIcon" class="fas fa-chart-bar"></i>顯示圖表</button>
+      <div id=anchor> </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12" style="width:110%;">
+        <div id="load" style="display:block; margin:auto;text-align: center; display:none;">Loading...</br>
+          <img style="display:block; margin:auto;" src="images/UyfU4KX.gif" />
+        </div>
+        <canvas id="myChart" style="display:none" class="table"></canvas>
+        <table style="position: relative;" id="show" class="rwd-table">
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

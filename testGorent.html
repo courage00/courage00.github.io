@@ -10,7 +10,8 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+      <script src="js/Chart.min.js"></script>
+      <script src="js/Chart.bundle.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -34,6 +35,7 @@
         $("#selectBlock").trigger("click");
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
+        $("#ShowChart").prop("disabled", false);
         $("#show").html("");
         $('#anchor').html("");
         $('#anchor').hide();
@@ -517,7 +519,6 @@
 
       var color = Chart.helpers.color;
       var barChartData = {
-        labels: [''],
         datasets: []
       };
       var ctx = document.getElementById('myChart').getContext('2d');
@@ -525,31 +526,43 @@
         type: 'bar',
         data: barChartData,
         options: {
-          responsive: true,
+          //responsive: true,
           legend: {
-            position: 'top',
+            position: 'bottom',
             label:{
-              fontSize:40
+              display: false,
+              fontSize: 28,
+              boxWidth: 100
             }
           },
           title: {
             display: false,
+            fontSize: 80
           },
           scales: {
             xAxes: [{
               ticks: {
-                fontSize: 30
+                fontSize: 50
               }
             }],
             yAxes: [{
               ticks: {
                 beginAtZero: true,
-                fontSize: 30
+                fontSize: 50
               }
             }]
+          },
+          tooltips: {
+            xPadding: 56,
+            yPadding: 50,
+            fontSize: 48,
+            titleFontSize:48,
+            bodyFontSize:48,
           }
         }
       });
+      Chart.defaults.global.defaultFontSize= 50;
+      Chart.defaults.global.defaultFontFamily = 'Arial';
       function AddChartData(labelName, chartData) {
         let coolrR = Math.floor(Math.random() * 256);
         let coolrG = Math.floor(Math.random() * 256);
@@ -902,7 +915,7 @@
         <i class="fab fa-sistrix"></i>Get</button>
       <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
         <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序全部</button>
-              <button id="ShowChart" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle">
+              <button id="ShowChart" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
                 <i id="ChartIcon" class="fas fa-chart-bar"></i>顯示圖表</button>
       <div id=anchor> </div>
     </div>
@@ -915,7 +928,9 @@
         <div id="load" style="display:block; margin:auto;text-align: center; display:none;">Loading...</br>
           <img style="display:block; margin:auto;" src="images/UyfU4KX.gif" />
         </div>
-        <canvas id="myChart" style="display:none" class="table"></canvas>
+        <div>
+        <canvas id="myChart" style="display:none; height:2000px" class="table"></canvas>
+      </div>
         <table style="position: relative;" id="show" class="rwd-table">
         </table>
       </div>

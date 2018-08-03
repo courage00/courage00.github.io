@@ -10,6 +10,7 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -26,15 +27,19 @@
     console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
     console.log("ʕ•͡ᴥ•ʔʕ•͡ᴥ•ʔ");
     console.log("ʕ•͡ᴥ•ʔ");
+
     $(function () {
       let SortNum = 1;
       $("#Submit").on('click', function () {
         $("#selectBlock").trigger("click");
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
+        $("#ShowChart").prop("disabled", true);
         $("#show").html("");
         $('#anchor').html("");
         $('#anchor').hide();
+         $('#myChart').hide();
+        RemoveChartData();
         let CheckBoxList = [];//存部分同意
         let BlockList = [];//存單表單多重區域
         let AsyncCount = 0;
@@ -182,12 +187,15 @@
             let gg;
             let dataGroup;
             let dataLength;
+            let chartDataCount=0;
+            let charLabelName;
             //let bloclName;
             for (i = 0; i < rowLength; i++) {
               dataGroup = rowArray[i].c;
               if (dataGroup[0] != null) {
                 continue;
               }
+              chartDataCount++;
               dataLength = dataGroup.length;
               html.push("<tr>");
               for (j = 0; j < dataLength; j++) {
@@ -209,6 +217,7 @@
                   case 2:
                     html.push("<td  class=\"area bigger-width\" data-th=\"區域\"><font class=\"bigger\" >" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
                     //bloclName= (dataGroup[j].f || dataGroup[j].v || "") +"";
+                    charLabelName= (dataGroup[j].f || dataGroup[j].v || "");
                     break;
                   case 3:
                     html.push("<td data-th=\"姓名\"><font class=\"bigger\">" + (dataGroup[j].f || dataGroup[j].v || "") + "</font></td>");
@@ -348,7 +357,7 @@
             }
             $("#show").append("<hr id=\"anchor_" + blockcount + "\" >");
             $('#anchor').append("<a id=\"tag_" + blockcount + "\" href=\"#anchor_" + blockcount + "\"  class=\"btn anchor\"><i class= \"fab fa-slack\" ></i></a>");
-
+            AddChartData(charLabelName, chartDataCount);
             $("#show").append(html.join(''));
             AsyncCount += await SetAnchorTag(blockcount);
             if (AsyncCount == CheckBoxList.length) {
@@ -356,6 +365,7 @@
               $('#load').hide();
               $("#Submit").prop("disabled", false);
               $("#Sort").prop("disabled", false);
+              $("#ShowChart").prop("disabled", false);
             };
             // $("#Submit").prop("disabled", false);
             // $("#Sort").prop("disabled", false);
@@ -507,6 +517,88 @@
           $('#gotop').stop().fadeOut("fast");
         }
       });
+
+      Chart.defaults.global.defaultFontSize = 20;
+      var color = Chart.helpers.color;
+      var barChartData = {
+        datasets: []
+      };
+      var ctx = document.getElementById('myChart').getContext('2d');
+      window.myBar = new Chart(ctx, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+          //responsive: true,
+          legend: {
+            position: 'bottom',
+            label:{
+              fontSize: 28,
+              boxWidth: 50
+            }
+          },
+          title: {
+            display: false,
+            fontSize: 80
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: 50
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 50
+              }
+            }]
+          },
+          tooltips: {
+            xPadding: 30,
+            yPadding: 30,
+            fontSize: 30,
+            titleFontSize:25,
+            bodyFontSize:25,
+            caretSize:15
+          }
+        }
+      });
+      Chart.defaults.global.defaultFontFamily = 'Arial';
+      function AddChartData(labelName, chartData) {
+        let coolrR = Math.floor(Math.random() * 256);
+        let coolrG = Math.floor(Math.random() * 256);
+        let coolrB = Math.floor(Math.random() * 256);
+        if(labelName==undefined){
+          return 0;
+        }
+        let newDataset = {
+          label: labelName,
+          backgroundColor: 'rgba(' + coolrR + ', ' + coolrG + ', ' + coolrB + ', 0.548)',
+          borderColor: 'rgba(' + coolrR + ', ' + coolrG + ', ' + coolrB + ', 0.548)',
+          borderWidth: 1,
+          data: [chartData]
+        };
+
+        barChartData.datasets.push(newDataset);
+        window.myBar.update();
+      }
+
+      function RemoveChartData() {
+        barChartData.datasets.length = 0;
+        window.myBar.update();
+      };
+      $("#ShowChart").click(function () {
+        if ($("#myChart").is(":visible")) {
+          $("#myChart").hide();
+        }
+        else {
+          $("#myChart").show();
+        }
+      });
+
+
+
+
     });
   </script>
 
@@ -827,6 +919,8 @@
         <i class="fab fa-sistrix"></i>Get</button>
       <button id="Sort" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
         <i id="SortIcon" class="fas fa-sort-numeric-up"></i>排序全部</button>
+              <button id="ShowChart" class="btn btn-primary  mt-ladda-btn ladda-button btn-circle" disabled="true">
+                <i id="ChartIcon" class="fas fa-chart-bar"></i>顯示圖表</button>
       <div id=anchor> </div>
     </div>
   </div>
@@ -838,6 +932,9 @@
         <div id="load" style="display:block; margin:auto;text-align: center; display:none;">Loading...</br>
           <img style="display:block; margin:auto;" src="images/UyfU4KX.gif" />
         </div>
+        <div>
+        <canvas id="myChart" style="display:none; height:2000px" class="table"></canvas>
+      </div>
         <table style="position: relative;" id="show" class="rwd-table">
         </table>
       </div>

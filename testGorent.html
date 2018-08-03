@@ -35,10 +35,11 @@
         $("#selectBlock").trigger("click");
         $("#Submit").prop("disabled", true);
         $("#Sort").prop("disabled", true);
-        $("#ShowChart").prop("disabled", false);
+        $("#ShowChart").prop("disabled", true);
         $("#show").html("");
         $('#anchor').html("");
         $('#anchor').hide();
+         $('#myChart').hide();
         RemoveChartData();
         let CheckBoxList = [];//存部分同意
         let BlockList = [];//存單表單多重區域
@@ -365,6 +366,7 @@
               $('#load').hide();
               $("#Submit").prop("disabled", false);
               $("#Sort").prop("disabled", false);
+              $("#ShowChart").prop("disabled", false);
             };
             // $("#Submit").prop("disabled", false);
             // $("#Sort").prop("disabled", false);
@@ -517,6 +519,7 @@
         }
       });
 
+      Chart.defaults.global.defaultFontSize = 20;
       var color = Chart.helpers.color;
       var barChartData = {
         datasets: []
@@ -552,20 +555,22 @@
             }]
           },
           tooltips: {
-            xPadding: 56,
+            xPadding: 50,
             yPadding: 50,
             fontSize: 48,
-            titleFontSize:48,
-            bodyFontSize:48,
+            titleFontSize:40,
+            bodyFontSize:40,
           }
         }
       });
-      Chart.defaults.global.defaultFontSize= 50;
       Chart.defaults.global.defaultFontFamily = 'Arial';
       function AddChartData(labelName, chartData) {
         let coolrR = Math.floor(Math.random() * 256);
         let coolrG = Math.floor(Math.random() * 256);
         let coolrB = Math.floor(Math.random() * 256);
+        if(labelName==undefined){
+          return 0;
+        }
         let newDataset = {
           label: labelName,
           backgroundColor: 'rgba(' + coolrR + ', ' + coolrG + ', ' + coolrB + ', 0.548)',
